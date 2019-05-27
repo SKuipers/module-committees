@@ -101,10 +101,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     });
 
     $table->addColumn('name', __('Name'));
-    $table->addColumn('seats', __('Seats'))->width('10%');
-    $table->addColumn('members', __('Members'))->width('10%');
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
     $table->addColumn('selectable', __('Selectable'))->format(Format::using('yesNo', 'selectable'));
+    $table->addColumn('seats', __('Seats'))->width('10%');
+    $table->addColumn('members', __('Members'))->width('10%');
 
     // ACTIONS
     $table->addActionColumn()
