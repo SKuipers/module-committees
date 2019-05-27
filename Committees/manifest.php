@@ -1,0 +1,102 @@
+<?php
+/*
+Gibbon, Flexible & Open School System
+Copyright (C) 2010, Ross Parker
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+// Basic variables
+$name = "Committees";
+$description = "Manage committee members and sign-up.";
+$entryURL = "committees.php";
+$type = "Additional";
+$category = "Other";
+$version = "0.0.00";
+$author = "Sandra Kuipers";
+$url = "https://github.com/SKuipers";
+
+// Module tables
+$moduleTables[] = "CREATE TABLE `committeesCommittee` (
+    `committeesCommitteeID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(120) NOT NULL,
+    `description` TEXT NULL,
+    `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+    `register` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+    PRIMARY KEY (`committeesCommitteeID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+
+$moduleTables[] = "CREATE TABLE `committeesRole` (
+    `committeesRoleID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `committeesCommitteeID` int(10) UNSIGNED ZEROFILL NOT NULL,
+    `name` VARCHAR(60) NOT NULL,
+    `seats` INT(4) NULL,
+    `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+    `selectable` ENUM('Y','N') NOT NULL DEFAULT 'N',
+    PRIMARY KEY (`committeesRoleID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+
+
+$moduleTables[] = "CREATE TABLE `committeesMember` (
+    `committeesCommitteeMemberID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `committeesCommitteeID` int(10) UNSIGNED ZEROFILL NOT NULL,
+    `committeesRoleID` int(10) UNSIGNED ZEROFILL NOT NULL,
+    `gibbonPersonID` INT(10) UNSIGNED ZEROFILL NOT NULL,
+    PRIMARY KEY (`committeesCommitteeMemberID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+
+
+// gibbonSettings entries
+// $gibbonSetting[] = "";
+
+// Action rows
+$actionRows[] = [
+    'name'                      => 'View Committees',
+    'precedence'                => '0',
+    'category'                  => 'Committees',
+    'description'               => '',
+    'URLList'                   => 'committees.php,committee.php',
+    'entryURL'                  => 'committees.php',
+    'entrySidebar'              => 'Y',
+    'menuShow'                  => 'Y',
+    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionTeacher'  => 'N',
+    'defaultPermissionStudent'  => 'N',
+    'defaultPermissionParent'   => 'N',
+    'defaultPermissionSupport'  => 'N',
+    'categoryPermissionStaff'   => 'Y',
+    'categoryPermissionStudent' => 'N',
+    'categoryPermissionParent'  => 'N',
+    'categoryPermissionOther'   => 'N',
+];
+
+$actionRows[] = [
+    'name'                      => 'Manage Committees',
+    'precedence'                => '0',
+    'category'                  => 'Administration',
+    'description'               => '',
+    'URLList'                   => 'committees_manage.php,committees_manage_add.php,committees_manage_edit.php,committees_manage_edit_role_edit.php,committees_manage_delete.php',
+    'entryURL'                  => 'committees_manage.php',
+    'entrySidebar'              => 'Y',
+    'menuShow'                  => 'Y',
+    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionTeacher'  => 'N',
+    'defaultPermissionStudent'  => 'N',
+    'defaultPermissionParent'   => 'N',
+    'defaultPermissionSupport'  => 'N',
+    'categoryPermissionStaff'   => 'Y',
+    'categoryPermissionStudent' => 'N',
+    'categoryPermissionParent'  => 'N',
+    'categoryPermissionOther'   => 'N',
+];
