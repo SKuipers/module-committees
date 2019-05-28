@@ -60,7 +60,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     // Validate that this record is unique
-    if (!$committeeRoleGateway->unique($data, ['name'])) {
+    if (!$committeeRoleGateway->unique($data, ['committeesCommitteeID', 'name'])) {
         $URL .= '&return=error7';
         header("Location: {$URL}");
         exit;

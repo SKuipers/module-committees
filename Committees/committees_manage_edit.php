@@ -144,7 +144,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $row = $form->addRow();
         $row->addLabel('selectable', __('Selectable'));
-        $row->addYesNo('selectable')->required();
+        $row->addYesNo('selectable')->required()->selected('N');
         
     $row = $form->addRow();
         $row->addLabel('seats', __('Seats'));
