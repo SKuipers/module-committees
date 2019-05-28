@@ -29,9 +29,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 } else {
     //Proceed!
     $search = $_GET['search'] ?? '';
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
 
     $page->breadcrumbs
-        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search])
+        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
         ->add(__m('Edit Committee'));
 
     if (isset($_GET['return'])) {
@@ -55,6 +56,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module']."/committees_manage_editProcess.php?search=$search");
 
     $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
 
     $row = $form->addRow();
@@ -66,7 +68,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('register', __('Register'));
+        $row->addLabel('register', __('Registration'))->description(__m(''));
         $row->addYesNo('register')->required();
 
     $row = $form->addRow();
@@ -127,6 +129,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form = Form::create('committeesManageEdit', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module'].'/committees_manage_edit_role_addProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
 
     $form->addRow()->addHeading(__('Add Role'));

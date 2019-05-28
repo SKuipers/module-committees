@@ -25,9 +25,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 } else {
     // Proceed!
     $search = $_GET['search'] ?? '';
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
 
     $page->breadcrumbs
-        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search])
+        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
         ->add(__m('Add Committee'));
 
     $editLink = '';
@@ -47,6 +48,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module'].'/committees_manage_addProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
 
     $row = $form->addRow();
         $row->addLabel('name', __('Name'));
@@ -55,6 +57,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $row = $form->addRow();
         $row->addLabel('active', __('Active'));
         $row->addYesNo('active')->required();
+
+    $row = $form->addRow();
+        $row->addLabel('register', __('Registration'))->description(__m(''));
+        $row->addYesNo('register')->required();
 
     $row = $form->addRow();
         $column = $row->addColumn()->setClass('');

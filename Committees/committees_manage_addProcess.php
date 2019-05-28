@@ -22,8 +22,9 @@ use Gibbon\Module\Committees\Domain\CommitteeGateway;
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_add.php&search='.$search;
+$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_add.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_add.php') == false) {
     $URL .= '&return=error0';
@@ -34,13 +35,15 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $committeeGateway = $container->get(CommitteeGateway::class);
 
     $data = [
-        'name'        => $_POST['name'] ?? '',
-        'active'      => $_POST['active'] ?? '',
-        'description' => $_POST['description'] ?? '',
+        'gibbonSchoolYearID' => $_POST['gibbonSchoolYearID'] ?? '',
+        'name'               => $_POST['name'] ?? '',
+        'active'             => $_POST['active'] ?? '',
+        'register'           => $_POST['register'] ?? '',
+        'description'        => $_POST['description'] ?? '',
     ];
 
     // Validate the required values are present
-    if (empty($data['name']) || empty($data['active'])) {
+    if (empty($data['gibbonSchoolYearID']) || empty($data['name']) || empty($data['active'])) {
         $URL .= '&return=error1';
         header("Location: {$URL}");
         exit;

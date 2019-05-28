@@ -33,7 +33,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         returnProcess($guid, $_GET['return'], null, null);
     }
 
-    $gibbonSchoolYearID = isset($_REQUEST['gibbonSchoolYearID'])? $_REQUEST['gibbonSchoolYearID'] : $_SESSION[$guid]['gibbonSchoolYearID'];
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
 
     // School Year Picker
     if (!empty($gibbonSchoolYearID)) {
@@ -73,6 +73,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $table->setTitle(__('View'));
 
     $table->addHeaderAction('add', __('Add'))
+        ->addParam('gibbonSchoolYearID', $gibbonSchoolYearID)
         ->setURL('/modules/Committees/committees_manage_add.php')
         ->displayLabel();
 
@@ -91,6 +92,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     // ACTIONS
     $table->addActionColumn()
+        ->addParam('gibbonSchoolYearID', $gibbonSchoolYearID)
         ->addParam('committeesCommitteeID')
         ->format(function ($committee, $actions) {
             $actions->addAction('edit', __('Edit'))
@@ -98,6 +100,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
             $actions->addAction('delete', __('Delete'))
                     ->setURL('/modules/Committees/committees_manage_delete.php');
+
+            $actions->addAction('members', __('Manage Members'))
+                    ->setIcon('attendance')
+                    ->setURL('/modules/Committees/committees_manage_members.php');
         });
 
     echo $table->render($committees);

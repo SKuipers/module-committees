@@ -23,9 +23,10 @@ use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_edit.php&committeesCommitteeID='.$committeesCommitteeID.'&search='.$search;
+$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit.php') == false) {
     $URL .= '&return=error0';
