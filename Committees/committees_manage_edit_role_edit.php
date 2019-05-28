@@ -21,7 +21,6 @@ use Gibbon\Forms\Form;
 use Gibbon\Services\Format;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
-use Gibbon\Tables\DataTable;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit.php') == false) {
     // Access denied
@@ -46,9 +45,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return;
     }
 
+    $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
     $values = $container->get(CommitteeRoleGateway::class)->getByID($committeesRoleID);
 
-    if (empty($values)) {
+    if (empty($committee) || empty($values)) {
         $page->addError(__('The specified record cannot be found.'));
         return;
     }
@@ -56,7 +56,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module']."/committees_manage_edit_role_editProcess.php?search=$search");
 
     $form->addHiddenValue('address', $_SESSION[$guid]['address']);
-    $form->addHiddenValue('gibbonSchoolYearID', $values['gibbonSchoolYearID']);
+    $form->addHiddenValue('gibbonSchoolYearID', $committee['gibbonSchoolYearID']);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
     $form->addHiddenValue('committeesRoleID', $committeesRoleID);
 

@@ -65,7 +65,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addLabel('gibbonPersonID', __('Person'));
         $row->addSelectStaff('gibbonPersonID')->readonly();
 
-    $roles = $container->get(CommitteeRoleGateway::class)->selectRoles($committeesCommitteeID)->fetchKeyPair();
+    $roles = $container->get(CommitteeRoleGateway::class)->selectActiveRolesByCommittee($committeesCommitteeID)->fetchKeyPair();
     $row = $form->addRow();
         $row->addLabel('committeesRoleID', __('Role'));
         $row->addSelect('committeesRoleID')->fromArray($roles);

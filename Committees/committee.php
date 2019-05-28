@@ -104,6 +104,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/4 md:w-1/5 my-2 text-center');
     $table->addMetaData('blankSlate', __m('There are currently no members in this committee.'));
 
+    if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members.php')) {
+        $table->addHeaderAction('edit', __('Edit'))
+            ->addParam('gibbonSchoolYearID', $committee['gibbonSchoolYearID'])
+            ->addParam('committeesCommitteeID', $committeesCommitteeID)
+            ->setURL('/modules/Committees/committees_manage_members.php')
+            ->displayLabel();
+    }
+
     $table->addColumn('image_240')
         ->format(function ($person) {
             return Format::userPhoto($person['image_240'], 'sm', '');
