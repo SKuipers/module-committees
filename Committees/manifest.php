@@ -29,32 +29,33 @@ $url = "https://github.com/SKuipers";
 
 // Module tables
 $moduleTables[] = "CREATE TABLE `committeesCommittee` (
-    `committeesCommitteeID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `gibbonSchoolYearID` INT(3) UNSIGNED ZEROFILL NULL,
     `name` VARCHAR(120) NOT NULL,
     `description` TEXT NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     `register` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     PRIMARY KEY (`committeesCommitteeID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 $moduleTables[] = "CREATE TABLE `committeesRole` (
-    `committeesRoleID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-    `committeesCommitteeID` int(10) UNSIGNED ZEROFILL NOT NULL,
+    `committeesRoleID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     `name` VARCHAR(60) NOT NULL,
     `seats` INT(4) NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     `selectable` ENUM('Y','N') NOT NULL DEFAULT 'N',
     PRIMARY KEY (`committeesRoleID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
 $moduleTables[] = "CREATE TABLE `committeesMember` (
-    `committeesCommitteeMemberID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-    `committeesCommitteeID` int(10) UNSIGNED ZEROFILL NOT NULL,
-    `committeesRoleID` int(10) UNSIGNED ZEROFILL NOT NULL,
+    `committeesCommitteeMemberID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL,
+    `committeesRoleID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     `gibbonPersonID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     PRIMARY KEY (`committeesCommitteeMemberID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
 // gibbonSettings entries

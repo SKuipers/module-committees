@@ -35,13 +35,15 @@ class CommitteeGateway extends QueryableGateway
      * @param QueryCriteria $criteria
      * @return DataSet
      */
-    public function queryCommittees(QueryCriteria $criteria)
+    public function queryCommittees(QueryCriteria $criteria, $gibbonSchoolYearID)
     {
         $query = $this
             ->newQuery()
             ->from($this->getTableName())
             ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.active', 'COUNT(DISTINCT committeesMember.gibbonPersonID) as members'])
             ->leftJoin('committeesMember', 'committeesMember.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
+            ->where('committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID')
+            ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
             ->groupBy(['committeesCommittee.committeesCommitteeID']);
 
         $criteria->addFilterRules([

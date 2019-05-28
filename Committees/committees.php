@@ -41,7 +41,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
         ->filterBy('active', 'Y')
         ->fromPOST();
 
-    $committees = $committeeGateway->queryCommittees($criteria);
+    $committees = $committeeGateway->queryCommittees($criteria, $_SESSION[$guid]['gibbonSchoolYearID']);
 
     // GRID TABLE
     $gridRenderer = new GridView($container->get('twig'));
