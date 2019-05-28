@@ -56,7 +56,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     echo '</p>';
 
     // AVAILABLE SEATS
-    $criteria = $committeeMemberGateway->newQueryCriteria()->fromPOST();
+    $criteria = $committeeMemberGateway->newQueryCriteria()
+        ->sortBy('committeesRole.name')
+        ->fromPOST();
     $seats = $committeeMemberGateway->queryAvailableSeats($criteria, $committeesCommitteeID);
 
     if (count($seats) > 0) {
@@ -68,13 +70,22 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
         $table->addMetaData('gridClass', 'rounded-sm bg-gray-100 border py-2');
         $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/4 md:w-1/5 my-2 text-center');
 
-        $table->addColumn('role');
-
-        $table->addColumn('seats')
-            ->setClass('text-xs text-gray-600 italic leading-snug')
+        $table->addColumn('image_240')
             ->format(function ($role) {
                 $availableSeats = intval($role['seats']) - $role['members'];
-                return __n('{count} Seat', '{count} Seats', $availableSeats);
+
+                $text = '<div class="badge right-0 -mr-4">'.$availableSeats.'</div>';
+                $text .= '<img src="./themes/Default/img/attendance_large.png" class="w-16"><br/>';
+                $text .= $role['role'];
+                $url = 'Foo';
+                return Format::link($url, $text, ['class' => 'inline-block relative text-gray-800 hover:text-blue-700']);
+            });
+
+        $table->addColumn('seats')
+            ->setClass('text-xs text-gray-600 italic leading-loose')
+            ->format(function ($role) {
+                $availableSeats = intval($role['seats']) - $role['members'];
+                return __n('{count} seat available', '{count} seats available', $availableSeats, ['total' => intval($role['seats'])]);
             });
 
         echo $table->render($seats);

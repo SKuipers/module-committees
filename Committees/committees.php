@@ -48,16 +48,21 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
     $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
     $table->setTitle(__('Committees'));
 
+    $table->addMetaData('gridClass', 'content-center justify-center');
+    $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/3 text-center mb-4');
+
     $table->addColumn('logo')
         ->format(function ($committee) {
-            return Format::userPhoto($committee['logo'] ?? '', 125, 'w-20 h-20 sm:w-32 sm:h-32 p-1');
+            $url = "./index.php?q=/modules/Committees/committee.php&committeesCommitteeID=".$committee['committeesCommitteeID'];
+            $text = Format::userPhoto('themes/Default/img/attendance_large.png', 125, 'w-20 h-20 sm:w-32 sm:h-32 p-6');
+            return Format::link($url, $text, ['class' => 'block']);
         });
 
     $table->addColumn('name')
-        ->setClass('text-xs font-bold mt-1 mb-4')
+        ->setClass('text-sm font-bold my-2')
         ->format(function ($committee) {
             $url = "./index.php?q=/modules/Committees/committee.php&committeesCommitteeID=".$committee['committeesCommitteeID'];
-            return Format::link($url, $committee['name']);
+            return Format::link($url, $committee['name'], ['class' => '']);
         });
 
     echo $table->render($committees);
