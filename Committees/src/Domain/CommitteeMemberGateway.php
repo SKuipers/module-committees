@@ -40,7 +40,7 @@ class CommitteeMemberGateway extends QueryableGateway
         $query = $this
             ->newQuery()
             ->from($this->getTableName())
-            ->cols(['gibbonPerson.gibbonPersonID', 'gibbonPerson.title', 'gibbonPerson.preferredName', 'gibbonPerson.surname', 'gibbonPerson.image_240', 'committeesRole.name as role'])
+            ->cols(['committeesMember.committeesMemberID', 'gibbonPerson.gibbonPersonID', 'gibbonPerson.title', 'gibbonPerson.preferredName', 'gibbonPerson.surname', 'gibbonPerson.image_240', 'committeesRole.name as role'])
             ->innerJoin('committeesCommittee', 'committeesCommittee.committeesCommitteeID=committeesMember.committeesCommitteeID')
             ->innerJoin('committeesRole', 'committeesRole.committeesRoleID=committeesMember.committeesRoleID')
             ->innerJoin('gibbonPerson', 'gibbonPerson.gibbonPersonID=committeesMember.gibbonPersonID')

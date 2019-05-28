@@ -49,4 +49,12 @@ class CommitteeRoleGateway extends QueryableGateway
 
         return $this->runQuery($query, $criteria);
     }
+
+    public function selectRoles($committeesCommitteeID)
+    {
+        $data = ['committeesCommitteeID' => $committeesCommitteeID];
+        $sql = "SELECT committeesRoleID as value, name FROM committeesRole WHERE committeesCommitteeID=:committeesCommitteeID ORDER BY name";
+
+        return $this->db()->select($sql, $data);
+    }
 }

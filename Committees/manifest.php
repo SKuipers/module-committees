@@ -50,11 +50,11 @@ $moduleTables[] = "CREATE TABLE `committeesRole` (
 
 
 $moduleTables[] = "CREATE TABLE `committeesMember` (
-    `committeesCommitteeMemberID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `committeesMemberID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
     `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     `committeesRoleID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     `gibbonPersonID` INT(10) UNSIGNED ZEROFILL NOT NULL,
-    PRIMARY KEY (`committeesCommitteeMemberID`)
+    PRIMARY KEY (`committeesMemberID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
@@ -87,7 +87,7 @@ $actionRows[] = [
     'precedence'                => '0',
     'category'                  => 'Administration',
     'description'               => '',
-    'URLList'                   => 'committees_manage.php,committees_manage_add.php,committees_manage_edit.php,committees_manage_edit_role_edit.php,committees_manage_delete.php',
+    'URLList'                   => 'committees_manage.php,committees_manage_add.php,committees_manage_edit.php,committees_manage_edit_role_edit.php,committees_manage_delete.php,committees_manage_members.php,committees_manage_members_add.php,committees_manage_members_edit.php,committees_manage_members_delete.php',
     'entryURL'                  => 'committees_manage.php',
     'entrySidebar'              => 'Y',
     'menuShow'                  => 'Y',
