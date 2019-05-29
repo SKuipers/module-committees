@@ -54,7 +54,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave
         return;
     }
 
-    echo Format::alert(__m('This action will remove you from the selected committee.'), 'warning');
+    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    if ($signupActive == 'Y') {
+        echo Format::alert(__m('This action will remove you from the selected committee.').' '.__m('You can then join a new committee from the View Committees page.'), 'warning');
+    } else {
+        echo Format::alert(__m('This action will remove you from the selected committee.').' '.__m('Sign-up is not currently active, you will not be able to automatically join a new committee.'), 'warning');
+    }
 
     $form = Form::create('committeesLeave', $gibbon->session->get('absoluteURL').'/modules/Committees/committee_leaveProcess.php');
     $form->setFactory(DatabaseFormFactory::create($pdo));
