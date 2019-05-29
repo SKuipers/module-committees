@@ -58,4 +58,22 @@ class CommitteeGateway extends QueryableGateway
 
         return $this->runQuery($query, $criteria);
     }
+
+    public function queryCommitteesByMember(QueryCriteria $criteria, $gibbonSchoolYearID, $gibbonPersonID)
+    {
+        $query = $this
+            ->newQuery()
+            ->from('committeesMember')
+            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.active', 'committeesRole.name as role'])
+            ->leftJoin('committeesCommittee', 'committeesMember.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
+            ->leftJoin('committeesRole', 'committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
+            ->where("committeesCommittee.active = 'Y'")
+            ->where('committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID')
+            ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
+            ->where('committeesMember.gibbonPersonID=:gibbonPersonID')
+            ->bindValue('gibbonPersonID', $gibbonPersonID)
+            ->groupBy(['committeesCommittee.committeesCommitteeID']);
+
+        return $this->runQuery($query, $criteria);
+    }
 }

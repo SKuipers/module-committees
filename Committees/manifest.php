@@ -83,6 +83,26 @@ $actionRows[] = [
 ];
 
 $actionRows[] = [
+    'name'                      => 'My Committees',
+    'precedence'                => '0',
+    'category'                  => 'Committees',
+    'description'               => '',
+    'URLList'                   => 'committees_my.php,committee_leave.php',
+    'entryURL'                  => 'committees_my.php',
+    'entrySidebar'              => 'Y',
+    'menuShow'                  => 'Y',
+    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionTeacher'  => 'Y',
+    'defaultPermissionStudent'  => 'N',
+    'defaultPermissionParent'   => 'N',
+    'defaultPermissionSupport'  => 'N',
+    'categoryPermissionStaff'   => 'Y',
+    'categoryPermissionStudent' => 'N',
+    'categoryPermissionParent'  => 'N',
+    'categoryPermissionOther'   => 'N',
+];
+
+$actionRows[] = [
     'name'                      => 'Sign-up for Committees',
     'precedence'                => '0',
     'category'                  => 'Committees',
