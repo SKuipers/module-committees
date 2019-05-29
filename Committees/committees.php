@@ -42,20 +42,32 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
         ->fromPOST();
 
     $committees = $committeeGateway->queryCommittees($criteria, $_SESSION[$guid]['gibbonSchoolYearID']);
+    $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
 
     // GRID TABLE
     $gridRenderer = new GridView($container->get('twig'));
     $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
-    $table->setTitle(__('Committees'));
+    $table->setTitle(__m('Committees'));
+
+    if ($canSignup) {
+        $table->setDescription(Format::alert(__('Committee sign-up is available. A number next to a committee displays the currently available seats.'), 'success').'<br/>');
+    }
 
     $table->addMetaData('gridClass', 'content-center justify-center');
     $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/3 text-center mb-4');
 
     $table->addColumn('logo')
-        ->format(function ($committee) {
+        ->setClass('text-center')
+        ->format(function ($committee) use ($canSignup) {
             $url = "./index.php?q=/modules/Committees/committee.php&committeesCommitteeID=".$committee['committeesCommitteeID'];
-            $text = Format::userPhoto('themes/Default/img/attendance_large.png', 125, 'w-20 h-20 sm:w-32 sm:h-32 p-6');
-            return Format::link($url, $text, ['class' => 'block']);
+            $text = Format::userPhoto('themes/Default/img/attendance_large.png', 125, 'w-full h-full p-6');
+
+            $availableSeats = intval($committee['totalSeats']) - intval($committee['usedSeats']);
+            if ($canSignup && $availableSeats > 0) {
+                $text .= '<div class="badge right-0 top-0 mt-2 mr-2">'.$availableSeats.'</div>';
+            }
+            
+            return Format::link($url, $text, ['class' => 'inline-block relative w-20 h-20 sm:w-32 sm:h-32']);
         });
 
     $table->addColumn('name')

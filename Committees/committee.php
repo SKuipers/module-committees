@@ -39,7 +39,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     $committeesCommitteeID = $_GET['committeesCommitteeID'] ?? '';
 
     $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
-
     $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
 
     if (empty($committee)) {
@@ -56,39 +55,41 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     echo '</p>';
 
     // AVAILABLE SEATS
-    $criteria = $committeeMemberGateway->newQueryCriteria()
-        ->sortBy('committeesRole.name')
-        ->fromPOST();
-    $seats = $committeeMemberGateway->queryAvailableSeats($criteria, $committeesCommitteeID);
+    if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php')) {
+        $criteria = $committeeMemberGateway->newQueryCriteria()
+            ->sortBy('committeesRole.name')
+            ->fromPOST();
+        $seats = $committeeMemberGateway->queryAvailableSeats($criteria, $committeesCommitteeID);
 
-    if (count($seats) > 0) {
-        $gridRenderer = new GridView($container->get('twig'));
-        $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
+        if (count($seats) > 0) {
+            $gridRenderer = new GridView($container->get('twig'));
+            $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
 
-        $table->setTitle(__('Available Seats'));
-        $table->setDescription(__('This committee has available seats. Click below to fill a seat.'));
-        $table->addMetaData('gridClass', 'rounded-sm bg-gray-100 border py-2');
-        $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/4 md:w-1/5 my-2 text-center');
+            $table->setTitle(__m('Available Seats'));
+            $table->setDescription(Format::alert(__m('This committee has available seats. Click below to fill a seat.'), 'success'));
+            $table->addMetaData('gridClass', 'rounded-sm bg-gray-100 border py-2');
+            $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/4 md:w-1/5 my-2 text-center');
 
-        $table->addColumn('image_240')
-            ->format(function ($role) {
-                $availableSeats = intval($role['seats']) - $role['members'];
+            $table->addColumn('image_240')
+                ->format(function ($role) {
+                    $availableSeats = intval($role['seats']) - $role['members'];
 
-                $text = '<div class="badge right-0 -mr-4">'.$availableSeats.'</div>';
-                $text .= '<img src="./themes/Default/img/attendance_large.png" class="w-16"><br/>';
-                $text .= $role['role'];
-                $url = 'Foo';
-                return Format::link($url, $text, ['class' => 'inline-block relative text-gray-800 hover:text-blue-700']);
-            });
+                    $text = '<div class="badge right-0 -mr-4">'.$availableSeats.'</div>';
+                    $text .= '<img src="./themes/Default/img/attendance_large.png" class="w-16"><br/>';
+                    $text .= $role['role'];
+                    $url = './index.php?q=/modules/Committees/committee_signup.php&committeesCommitteeID='.$role['committeesCommitteeID'].'&committeesRoleID='.$role['committeesRoleID'];
+                    return Format::link($url, $text, ['class' => 'inline-block relative text-gray-800 hover:text-blue-700']);
+                });
 
-        $table->addColumn('seats')
-            ->setClass('text-xs text-gray-600 italic leading-loose')
-            ->format(function ($role) {
-                $availableSeats = intval($role['seats']) - $role['members'];
-                return __n('{count} seat available', '{count} seats available', $availableSeats, ['total' => intval($role['seats'])]);
-            });
+            $table->addColumn('seats')
+                ->setClass('text-xs text-gray-600 italic leading-loose')
+                ->format(function ($role) {
+                    $availableSeats = intval($role['seats']) - $role['members'];
+                    return __n('{count} seat available', '{count} seats available', $availableSeats, ['total' => intval($role['seats'])]);
+                });
 
-        echo $table->render($seats);
+            echo $table->render($seats);
+        }
     }
 
     // QUERY
