@@ -47,8 +47,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         exit;
     }
 
+    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+
     $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
-    if (empty($committee) || $committee['register'] != 'Y') {
+    if (empty($committee) || $signupActive != 'Y' || $committee['register'] != 'Y') {
         $URL .= '&return=error1';
         header("Location: {$URL}");
         exit;

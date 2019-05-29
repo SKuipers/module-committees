@@ -42,6 +42,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
 
     $committees = $committeeGateway->queryCommitteesByMember($criteria, $gibbon->session->get('gibbonSchoolYearID'), $gibbon->session->get('gibbonPersonID'));
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
+    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 
     // DATA TABLE
     $table = DataTable::createPaginated('committees', $criteria);
@@ -62,11 +63,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
     // ACTIONS
     $table->addActionColumn()
         ->addParam('committeesCommitteeID')
-        ->format(function ($committee, $actions) use ($canSignup) {
+        ->format(function ($committee, $actions) use ($canSignup, $signupActive) {
             $actions->addAction('view', __('View'))
                     ->setURL('/modules/Committees/committee.php');
             
-            if ($canSignup) {
+            if ($canSignup && $signupActive == 'Y') {
                 $actions->addAction('leave', __('Leave Committee'))
                         ->setIcon('iconCross')
                         ->setURL('/modules/Committees/committee_leave.php');

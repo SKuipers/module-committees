@@ -50,7 +50,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         return;
     }
 
-    if ($committee['register'] != 'Y') {
+    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+
+    if ($signupActive != 'Y' || $committee['register'] != 'Y') {
         $page->addError(__('This committee is not available for sign-up.'));
         return;
     }

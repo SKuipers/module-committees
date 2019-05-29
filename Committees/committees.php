@@ -42,14 +42,16 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
         ->fromPOST();
 
     $committees = $committeeGateway->queryCommittees($criteria, $gibbon->session->get('gibbonSchoolYearID'));
+
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
+    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 
     // GRID TABLE
     $gridRenderer = new GridView($container->get('twig'));
     $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
     $table->setTitle(__m('Committees'));
 
-    if ($canSignup) {
+    if ($canSignup && $signupActive == 'Y') {
         $table->setDescription(Format::alert(__('Committee sign-up is available. A number next to a committee displays the currently available seats.'), 'success').'<br/>');
     }
 
@@ -58,12 +60,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
 
     $table->addColumn('logo')
         ->setClass('text-center')
-        ->format(function ($committee) use ($canSignup) {
+        ->format(function ($committee) use ($canSignup, $signupActive) {
             $url = "./index.php?q=/modules/Committees/committee.php&committeesCommitteeID=".$committee['committeesCommitteeID'];
             $text = Format::userPhoto('themes/Default/img/attendance_large.png', 125, 'w-full h-full p-6');
 
             $availableSeats = intval($committee['totalSeats']) - intval($committee['usedSeats']);
-            if ($canSignup && $committee['register'] == 'Y' && $availableSeats > 0) {
+            if ($canSignup && $signupActive == 'Y' && $committee['register'] == 'Y' && $availableSeats > 0) {
                 $text .= '<div class="badge right-0 top-0 mt-2 mr-2">'.$availableSeats.'</div>';
             }
             
