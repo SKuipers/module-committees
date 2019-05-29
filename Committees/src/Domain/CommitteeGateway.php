@@ -40,8 +40,10 @@ class CommitteeGateway extends QueryableGateway
         $query = $this
             ->newQuery()
             ->from($this->getTableName())
-            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.active', 'COUNT(DISTINCT committeesMember.gibbonPersonID) as members'])
+            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.active', "COUNT(DISTINCT committeesMember.gibbonPersonID) as members", "SUM(CASE WHEN committeesRole.selectable = 'Y' THEN committeesRole.seats ELSE 0 END) as totalSeats", "COUNT(DISTINCT CASE WHEN memberRole.selectable = 'Y' THEN committeesMember.gibbonPersonID  END) as usedSeats"])
+            ->leftJoin('committeesRole', 'committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
             ->leftJoin('committeesMember', 'committeesMember.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
+            ->leftJoin('committeesRole as memberRole', 'committeesMember.committeesRoleID=memberRole.committeesRoleID')
             ->where('committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID')
             ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
             ->groupBy(['committeesCommittee.committeesCommitteeID']);

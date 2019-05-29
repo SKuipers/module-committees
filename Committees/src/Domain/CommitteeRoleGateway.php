@@ -57,4 +57,29 @@ class CommitteeRoleGateway extends QueryableGateway
 
         return $this->db()->select($sql, $data);
     }
+
+    public function getMemberCountByRole($committeesRoleID)
+    {
+        $data = ['committeesRoleID' => $committeesRoleID];
+        $sql = "SELECT COUNT(DISTINCT committeesMember.gibbonPersonID) as members 
+                FROM committeesRole
+                JOIN committeesMember ON (committeesMember.committeesRoleID=committeesRole.committeesRoleID)
+                WHERE committeesRole.committeesRoleID=:committeesRoleID";
+
+        return $this->db()->selectOne($sql, $data);
+    }
+
+    public function getRoleCountByPerson($gibbonSchoolYearID, $gibbonPersonID)
+    {
+        $data = ['gibbonSchoolYearID' => $gibbonSchoolYearID, 'gibbonPersonID' => $gibbonPersonID];
+        $sql = "SELECT COUNT(DISTINCT committeesMember.gibbonPersonID) as members 
+                FROM committeesMember
+                JOIN committeesRole ON (committeesMember.committeesRoleID=committeesRole.committeesRoleID)
+                JOIN committeesCommittee ON (committeesCommittee.committeesCommitteeID=committeesRole.committeesCommitteeID)
+                WHERE committeesMember.gibbonPersonID=:gibbonPersonID
+                AND committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID
+                GROUP BY committeesRole.committeesRoleID";
+
+        return $this->db()->selectOne($sql, $data);
+    }
 }
