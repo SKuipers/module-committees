@@ -149,7 +149,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         
     $row = $form->addRow();
         $row->addLabel('seats', __('Seats'));
-        $row->addNumber('seats')->onlyInteger(true);
+        $row->addNumber('seats')->onlyInteger(true)->setValue(1);
 
     $row = $form->addRow();
         $row->addFooter();

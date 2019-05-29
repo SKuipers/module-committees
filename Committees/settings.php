@@ -44,6 +44,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/settings.php') 
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $row->addYesNo($setting['name'])->required()->selected($setting['value']);
 
+    $setting = $settingGateway->getSettingByScope('Committees', 'signupMaximum', true);
+    $row = $form->addRow();
+        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
+        $row->addNumber($setting['name'])->required()->setValue($setting['value'])->minimum(1);
+
     $row = $form->addRow();
         $row->addFooter();
         $row->addSubmit();

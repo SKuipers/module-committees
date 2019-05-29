@@ -21,6 +21,7 @@ use Gibbon\Forms\Form;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 use Gibbon\Forms\DatabaseFormFactory;
+use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php') == false) {
     // Access denied
@@ -41,6 +42,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     }
 
     $committeeRoleGateway = $container->get(CommitteeRoleGateway::class);
+    $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
 
     $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
     $role = $committeeRoleGateway->getByID($committeesRoleID);
@@ -53,13 +55,20 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 
     if ($signupActive != 'Y' || $committee['register'] != 'Y') {
-        $page->addError(__('This committee is not available for sign-up.'));
+        $page->addError(__m('This committee is not available for sign-up.'));
         return;
     }
 
+    $roleExisting = $committeeMemberGateway->selectBy(['gibbonPersonID' => $gibbon->session->get('gibbonPersonID'), 'committeesCommitteeID' => $committeesCommitteeID]);
+    if ($roleExisting->rowCount() > 0) {
+        $page->addError(__m('You are already a member of this committee.'));
+        return;
+    }
+
+    $signupMaximum = getSettingByScope($connection2, 'Committees', 'signupMaximum');
     $roleCount = $committeeRoleGateway->getRoleCountByPerson($gibbon->session->get('gibbonSchoolYearID'), $gibbon->session->get('gibbonPersonID'));
-    if ($roleCount >= 1) {
-        $page->addMessage(__('You have already signed-up for the maximum number of committees.'));
+    if ($roleCount >= $signupMaximum) {
+        $page->addMessage(__m('You have already signed-up for the maximum number of committees.'));
         return;
     }
 
@@ -67,7 +76,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     $availableSeats = intval($role['seats']) - $memberCount;
 
     if ($role['selectable'] != 'Y' || $availableSeats <= 0) {
-        $page->addMessage(__('There are currently no seats available for this role.'));
+        $page->addMessage(__m('There are currently no seats available for this role.'));
         return;
     }
 

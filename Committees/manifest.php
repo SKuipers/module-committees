@@ -60,6 +60,7 @@ $moduleTables[] = "CREATE TABLE `committeesMember` (
 
 // gibbonSettings entries
 $gibbonSetting[] = "INSERT INTO `gibbonSetting` (`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES ('Committees', 'signupActive', 'Sign-up Active?', 'System-wide access control', 'N');";
+$gibbonSetting[] = "INSERT INTO `gibbonSetting` (`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES ('Committees', 'signupMaximum', 'Maximum Committees per Person', '', '1');";
 
 // Action rows
 $actionRows[] = [

@@ -33,7 +33,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/settings.php') 
 
     $settingsToUpdate = [
         'Committees' => [
-            'signupActive',
+            'signupActive', 'signupMaximum'
         ],
     ];
 

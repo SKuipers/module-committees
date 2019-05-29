@@ -33,7 +33,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
         ->add(__m('Committee'));
 
     if (isset($_GET['return'])) {
-        returnProcess($guid, $_GET['return'], null, null);
+        returnProcess($guid, $_GET['return'], null, [
+            'error3' => __m('This committee is not available for sign-up.'),
+            'error4' => __m('There are currently no seats available for this role.'),
+            'error5' => __m('You have already signed-up for the maximum number of committees.'),
+            ]);
     }
 
     $committeesCommitteeID = $_GET['committeesCommitteeID'] ?? '';

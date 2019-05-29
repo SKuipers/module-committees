@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
+use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 require_once '../../gibbon.php';
@@ -32,6 +33,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     exit;
 } else {
     // Proceed!
+    $committeeGateway = $container->get(CommitteeGateway::class);
+    $committeeRoleGateway = $container->get(CommitteeRoleGateway::class);
     $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
 
     $data = [
@@ -47,11 +50,38 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         exit;
     }
 
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $committee = $committeeGateway->getByID($data['committeesCommitteeID']);
+    $role = $committeeRoleGateway->getByID($data['committeesRoleID']);
 
-    $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
-    if (empty($committee) || $signupActive != 'Y' || $committee['register'] != 'Y') {
-        $URL .= '&return=error1';
+    // Validate the database relationships exist
+    if (empty($committee) || empty($role)) {
+        $URL .= '&return=error2';
+        header("Location: {$URL}");
+        exit;
+    }
+
+    // Ensure the committee signup is available
+    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    if ($signupActive != 'Y' || $committee['register'] != 'Y') {
+        $URL .= '&return=error3';
+        header("Location: {$URL}");
+        exit;
+    }
+
+    // Ensure there are seats available
+    $memberCount = $committeeRoleGateway->getMemberCountByRole($data['committeesRoleID']);
+    $availableSeats = intval($role['seats']) - $memberCount;
+    if ($role['selectable'] != 'Y' || $availableSeats <= 0) {
+        $URL .= '&return=error4';
+        header("Location: {$URL}");
+        exit;
+    }
+
+    // Ensure the person has not exceeded their max sign-ups
+    $signupMaximum = getSettingByScope($connection2, 'Committees', 'signupMaximum');
+    $roleCount = $committeeRoleGateway->getRoleCountByPerson($gibbon->session->get('gibbonSchoolYearID'), $data['gibbonPersonID']);
+    if ($roleCount >= $signupMaximum) {
+        $URL .= '&return=error5';
         header("Location: {$URL}");
         exit;
     }
