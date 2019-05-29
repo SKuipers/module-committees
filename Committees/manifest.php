@@ -59,7 +59,7 @@ $moduleTables[] = "CREATE TABLE `committeesMember` (
 
 
 // gibbonSettings entries
-// $gibbonSetting[] = "";
+$gibbonSetting[] = "INSERT INTO `gibbonSetting` (`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES ('Committees', 'signupActive', 'Sign-up Active?', 'System-wide access control', 'N');";
 
 // Action rows
 $actionRows[] = [
@@ -129,6 +129,26 @@ $actionRows[] = [
     'description'               => '',
     'URLList'                   => 'committees_manage.php,committees_manage_add.php,committees_manage_edit.php,committees_manage_edit_role_edit.php,committees_manage_delete.php,committees_manage_members.php,committees_manage_members_add.php,committees_manage_members_edit.php,committees_manage_members_delete.php',
     'entryURL'                  => 'committees_manage.php',
+    'entrySidebar'              => 'Y',
+    'menuShow'                  => 'Y',
+    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionTeacher'  => 'N',
+    'defaultPermissionStudent'  => 'N',
+    'defaultPermissionParent'   => 'N',
+    'defaultPermissionSupport'  => 'N',
+    'categoryPermissionStaff'   => 'Y',
+    'categoryPermissionStudent' => 'N',
+    'categoryPermissionParent'  => 'N',
+    'categoryPermissionOther'   => 'N',
+];
+
+$actionRows[] = [
+    'name'                      => 'Manage Settings',
+    'precedence'                => '0',
+    'category'                  => 'Administration',
+    'description'               => '',
+    'URLList'                   => 'settings.php',
+    'entryURL'                  => 'settings.php',
     'entrySidebar'              => 'Y',
     'menuShow'                  => 'Y',
     'defaultPermissionAdmin'    => 'Y',
