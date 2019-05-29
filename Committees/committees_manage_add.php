@@ -51,7 +51,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
 
     $row = $form->addRow();
-        $row->addLabel('name', __('Name'));
+        $row->addLabel('name', __('Name'))->description(__('Must be unique for this school year.'));
         $row->addTextField('name')->maxLength(120)->required();
 
     $row = $form->addRow();
@@ -59,7 +59,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('register', __('Registration'))->description(__m(''));
+        $row->addLabel('register', __m('Can Sign-up?'))->description(__m('Assuming system-wide sign-up is open, should this committee be available to select?'));
         $row->addYesNo('register')->required();
 
     $row = $form->addRow();

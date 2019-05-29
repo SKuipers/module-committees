@@ -62,7 +62,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form->addHiddenValue('committeesRoleID', $committeesRoleID);
 
     $row = $form->addRow();
-        $row->addLabel('name', __('Name'));
+        $row->addLabel('name', __('Name'))->description(__('Must be unique for this committee.'));
         $row->addTextField('name')->maxLength(60)->required();
 
     $row = $form->addRow();
@@ -70,12 +70,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('selectable', __('Selectable'));
+        $row->addLabel('selectable', __m('Can Sign-up?'))->description(__m('Is this role selectable during committee sign-up?'));
         $row->addYesNo('selectable')->required();
         
     $row = $form->addRow();
-        $row->addLabel('seats', __('Seats'));
-        $row->addNumber('seats')->onlyInteger(true);
+        $row->addLabel('seats', __('Seats'))->description(__m('The number of available spaces for new members during sign-up. This does not limit members added manually.'));
+        $row->addNumber('seats')->onlyInteger(true)->minimum(1);
 
     $row = $form->addRow();
         $row->addFooter();

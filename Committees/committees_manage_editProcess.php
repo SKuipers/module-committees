@@ -57,7 +57,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     // Validate that this record is unique
-    if (!$committeeGateway->unique($data, ['name'], $committeesCommitteeID)) {
+    if (!$committeeGateway->unique($data, ['name', 'gibbonSchoolYearID'], $committeesCommitteeID)) {
         $URL .= '&return=error7';
         header("Location: {$URL}");
         exit;

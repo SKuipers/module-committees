@@ -101,7 +101,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
 
     // QUERY
     $criteria = $committeeMemberGateway->newQueryCriteria()->fromPOST();
-    $members = $committeeMemberGateway->queryCommitteeMembers($criteria, $committeesCommitteeID);
+    $members = $committeeMemberGateway->queryMembersByCommittee($criteria, $committeesCommitteeID);
 
     // GRID TABLE
     $gridRenderer = new GridView($container->get('twig'));

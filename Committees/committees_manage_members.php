@@ -60,7 +60,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         ->sortBy(['gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->fromPOST();
 
-    $committees = $committeeMemberGateway->queryCommitteeMembers($criteria, $committeesCommitteeID);
+    $committees = $committeeMemberGateway->queryMembersByCommittee($criteria, $committeesCommitteeID);
 
     // DATA TABLE
     $table = DataTable::createPaginated('committees', $criteria);

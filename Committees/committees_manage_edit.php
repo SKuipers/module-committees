@@ -60,7 +60,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
 
     $row = $form->addRow();
-        $row->addLabel('name', __('Name'));
+        $row->addLabel('name', __('Name'))->description(__('Must be unique for this school year.'));
         $row->addTextField('name')->maxLength(120)->required();
 
     $row = $form->addRow();
@@ -68,7 +68,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('register', __('Registration'))->description(__m(''));
+        $row->addLabel('register', __m('Can Sign-up?'))->description(__m('Assuming system-wide sign-up is open, should this committee be available to select?'));
         $row->addYesNo('register')->required();
 
     $row = $form->addRow();
@@ -104,7 +104,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $table->addColumn('name', __('Name'));
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
-    $table->addColumn('selectable', __('Selectable'))->format(Format::using('yesNo', 'selectable'));
+    $table->addColumn('selectable', __m('Sign-up?'))->format(Format::using('yesNo', 'selectable'));
     $table->addColumn('seats', __('Seats'))->width('10%');
     $table->addColumn('members', __('Members'))->width('10%');
 
@@ -136,7 +136,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form->addRow()->addHeading(__('Add Role'));
 
     $row = $form->addRow();
-        $row->addLabel('name', __('Name'));
+        $row->addLabel('name', __('Name'))->description(__('Must be unique for this committee.'));
         $row->addTextField('name')->maxLength(60)->required();
 
     $row = $form->addRow();
@@ -144,12 +144,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('selectable', __('Selectable'));
+        $row->addLabel('selectable', __m('Can Sign-up?'))->description(__m('Is this role selectable during committee sign-up?'));
         $row->addYesNo('selectable')->required();
         
     $row = $form->addRow();
-        $row->addLabel('seats', __('Seats'));
-        $row->addNumber('seats')->onlyInteger(true)->setValue(1);
+        $row->addLabel('seats', __('Seats'))->description(__m('The number of available spaces for new members during sign-up. This does not limit members added manually.'));
+        $row->addNumber('seats')->onlyInteger(true)->setValue(1)->minimum(1);
 
     $row = $form->addRow();
         $row->addFooter();
