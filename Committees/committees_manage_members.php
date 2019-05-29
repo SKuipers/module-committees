@@ -65,6 +65,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     // DATA TABLE
     $table = DataTable::createPaginated('committees', $criteria);
     $table->setTitle($committee['name']);
+    $table->addMetaData('blankSlate', __m('There are currently no members in this committee.'));
 
     $table->addHeaderAction('add', __('Add'))
         ->addParam('gibbonSchoolYearID', $gibbonSchoolYearID)

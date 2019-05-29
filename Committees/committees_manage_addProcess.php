@@ -56,7 +56,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         exit;
     }
 
-    // Create the substitute
+    // Create the record
     $committeesCommitteeID = $committeeGateway->insert($data);
 
     $URL .= !$committeesCommitteeID

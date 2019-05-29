@@ -56,7 +56,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module']."/committees_manage_members_editProcess.php?search=$search");
     $form->setFactory(DatabaseFormFactory::create($pdo));
     
-    $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
     $form->addHiddenValue('committeesMemberID', $committeesMemberID);
