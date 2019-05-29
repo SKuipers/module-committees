@@ -41,7 +41,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
         ->filterBy('active', 'Y')
         ->fromPOST();
 
-    $committees = $committeeGateway->queryCommittees($criteria, $_SESSION[$guid]['gibbonSchoolYearID']);
+    $committees = $committeeGateway->queryCommittees($criteria, $gibbon->session->get('gibbonSchoolYearID'));
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
 
     // GRID TABLE

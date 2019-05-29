@@ -23,7 +23,7 @@ require_once '../../gibbon.php';
 
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committee.php&committeesCommitteeID='.$committeesCommitteeID;
+$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committee.php&committeesCommitteeID='.$committeesCommitteeID;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php') == false) {
     $URL .= '&return=error0';

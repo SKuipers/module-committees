@@ -39,6 +39,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return;
     }
 
-    $form = DeleteForm::createForm($_SESSION[$guid]['absoluteURL'].'/modules/Committees/committees_manage_deleteProcess.php?committeesCommitteeID='.$committeesCommitteeID, true);
+    $form = DeleteForm::createForm($gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_deleteProcess.php?committeesCommitteeID='.$committeesCommitteeID, true);
     echo $form->getOutput();
 }

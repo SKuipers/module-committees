@@ -21,11 +21,11 @@ use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 require_once '../../gibbon.php';
 
-$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 $committeesMemberID = $_POST['committeesMemberID'] ?? '';
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_members.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID;
+$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_members.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members_delete.php') == false) {
     $URL .= '&return=error0';

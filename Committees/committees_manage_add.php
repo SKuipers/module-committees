@@ -25,7 +25,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 } else {
     // Proceed!
     $search = $_GET['search'] ?? '';
-    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
 
     $page->breadcrumbs
         ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
@@ -33,7 +33,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $editLink = '';
     if (isset($_GET['editID'])) {
-        $editLink = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$_GET['editID'].'&search='.$_GET['search'];
+        $editLink = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$_GET['editID'].'&search='.$_GET['search'];
     }
     if (isset($_GET['return'])) {
         returnProcess($guid, $_GET['return'], $editLink, null);
@@ -41,11 +41,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     if ($search != '') {
         echo "<div class='linkTop'>";
-        echo "<a href='".$_SESSION[$guid]['absoluteURL']."/index.php?q=/modules/Committees/committees_manage.php&search=$search'>".__('Back to Search Results').'</a>';
+        echo "<a href='".$gibbon->session->get('absoluteURL')."/index.php?q=/modules/Committees/committees_manage.php&search=$search'>".__('Back to Search Results').'</a>';
         echo '</div>';
     }
 
-    $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module'].'/committees_manage_addProcess.php?search='.$search);
+    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/'.$gibbon->session->get('module').'/committees_manage_addProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);

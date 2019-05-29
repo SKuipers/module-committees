@@ -22,9 +22,9 @@ use Gibbon\Module\Committees\Domain\CommitteeGateway;
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';
-$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_add.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&search='.$search;
+$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_add.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_add.php') == false) {
     $URL .= '&return=error0';

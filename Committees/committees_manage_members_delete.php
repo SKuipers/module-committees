@@ -25,7 +25,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $page->addError(__('You do not have access to this action.'));
 } else {
     // Proceed!
-    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
     $committeesCommitteeID = $_GET['committeesCommitteeID'] ?? '';
     $committeesMemberID = $_GET['committeesMemberID'] ?? '';
     
@@ -41,6 +41,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return;
     }
 
-    $form = DeleteForm::createForm($_SESSION[$guid]['absoluteURL'].'/modules/Committees/committees_manage_members_deleteProcess.php?gibbonSchoolYearID='.$gibbonSchoolYearID);
+    $form = DeleteForm::createForm($gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_members_deleteProcess.php?gibbonSchoolYearID='.$gibbonSchoolYearID);
     echo $form->getOutput();
 }

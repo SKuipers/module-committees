@@ -24,10 +24,10 @@ use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';
-$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_members.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID.'&search='.$search;
+$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_members.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members_add.php') == false) {
     $URL .= '&return=error0';
