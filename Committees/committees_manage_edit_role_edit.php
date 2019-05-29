@@ -28,12 +28,13 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 } else {
     //Proceed!
     $search = $_GET['search'] ?? '';
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $_SESSION[$guid]['gibbonSchoolYearID'];
     $committeesCommitteeID = $_GET['committeesCommitteeID'] ?? '';
     $committeesRoleID = $_GET['committeesRoleID'] ?? '';
 
     $page->breadcrumbs
-        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search])
-        ->add(__m('Edit Committee'), 'committees_manage_edit.php', ['committeesCommitteeID' => $committeesCommitteeID])
+        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
+        ->add(__m('Edit Committee'), 'committees_manage_edit.php', ['committeesCommitteeID' => $committeesCommitteeID, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
         ->add(__m('Edit Role'));
 
     if (isset($_GET['return'])) {
@@ -55,7 +56,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module']."/committees_manage_edit_role_editProcess.php?search=$search");
 
-    $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $committee['gibbonSchoolYearID']);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
     $form->addHiddenValue('committeesRoleID', $committeesRoleID);

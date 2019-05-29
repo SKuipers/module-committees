@@ -33,7 +33,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $editLink = '';
     if (isset($_GET['editID'])) {
-        $editLink = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_edit.php&committeesCommitteeID='.$_GET['editID'].'&search='.$_GET['search'];
+        $editLink = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/committees_manage_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$_GET['editID'].'&search='.$_GET['search'];
     }
     if (isset($_GET['return'])) {
         returnProcess($guid, $_GET['return'], $editLink, null);
@@ -47,7 +47,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $form = Form::create('committeesManage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module'].'/committees_manage_addProcess.php?search='.$search);
 
-    $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
 
     $row = $form->addRow();
