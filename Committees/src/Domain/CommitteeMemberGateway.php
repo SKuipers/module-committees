@@ -35,7 +35,24 @@ class CommitteeMemberGateway extends QueryableGateway
      * @param QueryCriteria $criteria
      * @return DataSet
      */
-    public function queryCommitteeMembers(QueryCriteria $criteria, $committeesCommitteeID)
+    public function queryMembersBySchoolYear(QueryCriteria $criteria, $gibbonSchoolYearID)
+    {
+        $query = $this
+            ->newQuery()
+            ->from($this->getTableName())
+            ->cols(['committeesMember.committeesMemberID', 'gibbonPerson.gibbonPersonID', 'gibbonPerson.title', 'gibbonPerson.preferredName', 'gibbonPerson.surname', 'gibbonPerson.image_240', 'committeesRole.name as role', 'committeesCommittee.name as committee'])
+            ->innerJoin('committeesCommittee', 'committeesCommittee.committeesCommitteeID=committeesMember.committeesCommitteeID')
+            ->innerJoin('committeesRole', 'committeesRole.committeesRoleID=committeesMember.committeesRoleID')
+            ->innerJoin('gibbonPerson', 'gibbonPerson.gibbonPersonID=committeesMember.gibbonPersonID')
+            ->where("committeesCommittee.active = 'Y'")
+            ->where('committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID')
+            ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID);
+
+        return $this->runQuery($query, $criteria);
+    }
+
+    
+    public function queryMembersByCommittee(QueryCriteria $criteria, $committeesCommitteeID)
     {
         $query = $this
             ->newQuery()
@@ -65,6 +82,29 @@ class CommitteeMemberGateway extends QueryableGateway
             ->where("committeesRole.selectable = 'Y'")
             ->groupBy(['committeesRole.committeesRoleID'])
             ->having('members < committeesRole.seats');
+
+        return $this->runQuery($query, $criteria);
+    }
+
+    public function queryStaffWhoAreNotMembers(QueryCriteria $criteria, $gibbonSchoolYearID, $allStaff = false)
+    {
+        $query = $this
+            ->newQuery()
+            ->from('gibbonStaff')
+            ->cols(['gibbonPerson.gibbonPersonID', 'gibbonPerson.title', 'gibbonPerson.preferredName', 'gibbonPerson.surname', 'gibbonPerson.image_240', 'gibbonStaff.jobTitle', 'gibbonStaff.type'])
+            ->innerJoin('gibbonPerson', 'gibbonPerson.gibbonPersonID=gibbonStaff.gibbonPersonID')
+            ->leftJoin('committeesMember', 'committeesMember.gibbonPersonID=gibbonPerson.gibbonPersonID')
+            ->leftJoin('committeesCommittee', "committeesCommittee.committeesCommitteeID=committeesMember.committeesCommitteeID 
+                        AND committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID AND committeesCommittee.active = 'Y'")
+            ->where("committeesCommittee.committeesCommitteeID IS NULL")
+            ->where("gibbonPerson.status='Full'")
+            ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
+            ->groupBy(['gibbonStaff.gibbonPersonID']);
+
+        if (!$allStaff) {
+            $query->innerJoin('gibbonRole', 'FIND_IN_SET(gibbonRole.gibbonRoleID, gibbonPerson.gibbonRoleIDAll)')
+                  ->where("(gibbonRole.name LIKE '%Leader%' OR gibbonRole.name LIKE '%Teacher%' OR gibbonStaff.type LIKE 'Teach')");
+        }
 
         return $this->runQuery($query, $criteria);
     }

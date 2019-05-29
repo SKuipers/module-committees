@@ -162,3 +162,43 @@ $actionRows[] = [
     'categoryPermissionParent'  => 'N',
     'categoryPermissionOther'   => 'N',
 ];
+
+$actionRows[] = [
+    'name'                      => 'Committee Membership',
+    'precedence'                => '0',
+    'category'                  => 'Reports',
+    'description'               => '',
+    'URLList'                   => 'report_members.php',
+    'entryURL'                  => 'report_members.php',
+    'entrySidebar'              => 'Y',
+    'menuShow'                  => 'Y',
+    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionTeacher'  => 'N',
+    'defaultPermissionStudent'  => 'N',
+    'defaultPermissionParent'   => 'N',
+    'defaultPermissionSupport'  => 'N',
+    'categoryPermissionStaff'   => 'Y',
+    'categoryPermissionStudent' => 'N',
+    'categoryPermissionParent'  => 'N',
+    'categoryPermissionOther'   => 'N',
+];
+
+$actionRows[] = [
+    'name'                      => 'Staff Not Signed-up',
+    'precedence'                => '0',
+    'category'                  => 'Reports',
+    'description'               => '',
+    'URLList'                   => 'report_notSignedUp.php',
+    'entryURL'                  => 'report_notSignedUp.php',
+    'entrySidebar'              => 'Y',
+    'menuShow'                  => 'Y',
+    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionTeacher'  => 'N',
+    'defaultPermissionStudent'  => 'N',
+    'defaultPermissionParent'   => 'N',
+    'defaultPermissionSupport'  => 'N',
+    'categoryPermissionStaff'   => 'Y',
+    'categoryPermissionStudent' => 'N',
+    'categoryPermissionParent'  => 'N',
+    'categoryPermissionOther'   => 'N',
+];
