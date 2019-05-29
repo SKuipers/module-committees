@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 require_once '../../gibbon.php';
@@ -41,6 +42,13 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
 
     // Validate the required values are present
     if (empty($data['committeesCommitteeID']) || empty($data['committeesRoleID']) || empty($data['gibbonPersonID'])) {
+        $URL .= '&return=error1';
+        header("Location: {$URL}");
+        exit;
+    }
+
+    $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
+    if (empty($committee) || $committee['register'] != 'Y') {
         $URL .= '&return=error1';
         header("Location: {$URL}");
         exit;

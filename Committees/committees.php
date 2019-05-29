@@ -63,7 +63,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
             $text = Format::userPhoto('themes/Default/img/attendance_large.png', 125, 'w-full h-full p-6');
 
             $availableSeats = intval($committee['totalSeats']) - intval($committee['usedSeats']);
-            if ($canSignup && $availableSeats > 0) {
+            if ($canSignup && $committee['register'] == 'Y' && $availableSeats > 0) {
                 $text .= '<div class="badge right-0 top-0 mt-2 mr-2">'.$availableSeats.'</div>';
             }
             

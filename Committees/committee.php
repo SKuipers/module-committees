@@ -54,8 +54,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     echo $committee['description'];
     echo '</p>';
 
+    $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
+
     // AVAILABLE SEATS
-    if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php')) {
+    if ($canSignup && $committee['register'] == 'Y') {
         $criteria = $committeeMemberGateway->newQueryCriteria()
             ->sortBy('committeesRole.name')
             ->fromPOST();
@@ -66,7 +68,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
             $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
 
             $table->setTitle(__m('Available Seats'));
-            $table->setDescription(Format::alert(__m('This committee has available seats. Click below to fill a seat.'), 'success'));
+            $table->setDescription(__m('This committee has available seats. Click below to fill a seat.'));
             $table->addMetaData('gridClass', 'rounded-sm bg-gray-100 border py-2');
             $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/4 md:w-1/5 my-2 text-center');
 

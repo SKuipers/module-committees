@@ -38,6 +38,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $data = [
         'name'        => $_POST['name'] ?? '',
         'active'      => $_POST['active'] ?? '',
+        'register'    => $_POST['register'] ?? '',
         'description' => $_POST['description'] ?? '',
     ];
 

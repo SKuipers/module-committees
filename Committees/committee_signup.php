@@ -50,8 +50,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         return;
     }
 
-    $roleCount = $committeeRoleGateway->getRoleCountByPerson($gibbon->session->get('gibbonSchoolYearID'), $gibbon->session->get('gibbonPersonID'));
+    if ($committee['register'] != 'Y') {
+        $page->addError(__('This committee is not available for sign-up.'));
+        return;
+    }
 
+    $roleCount = $committeeRoleGateway->getRoleCountByPerson($gibbon->session->get('gibbonSchoolYearID'), $gibbon->session->get('gibbonPersonID'));
     if ($roleCount >= 1) {
         $page->addMessage(__('You have already signed-up for the maximum number of committees.'));
         return;
