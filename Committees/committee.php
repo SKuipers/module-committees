@@ -104,7 +104,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
 
     // QUERY
     $criteria = $committeeMemberGateway->newQueryCriteria()
-        ->sortBy(['type', 'surname', 'preferredName'])
+        ->sortBy(['committeesRole.type', 'gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->fromPOST();
     $members = $committeeMemberGateway->queryMembersByCommittee($criteria, $committeesCommitteeID);
 
