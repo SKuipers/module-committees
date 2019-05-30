@@ -63,6 +63,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('signup')->required();
 
     $row = $form->addRow();
+        $row->addLabel('file', __('Logo'))->description(__('125x125px jpg/png/gif'));
+        $row->addFileUpload('file')->accepts('.jpg,.jpeg,.gif,.png');
+
+    $row = $form->addRow();
         $column = $row->addColumn()->setClass('');
         $column->addLabel('description', __('Description'));
         $column->addEditor('description', $guid);

@@ -62,7 +62,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
         ->setClass('text-center')
         ->format(function ($committee) use ($canSignup, $signupActive) {
             $url = "./index.php?q=/modules/Committees/committee.php&committeesCommitteeID=".$committee['committeesCommitteeID'];
-            $text = Format::userPhoto('themes/Default/img/attendance_large.png', 125, 'w-full h-full p-6');
+            $logoURL = !empty($committee['logo'])
+                ? $committee['logo']
+                : 'themes/Default/img/attendance_large.png';
+            $text = Format::userPhoto($logoURL, 125, 'w-full h-full '.(!empty($committee['logo']) ? 'p-1' : 'p-6'));
 
             $availableSeats = intval($committee['totalSeats']) - intval($committee['usedSeats']);
             if ($canSignup && $signupActive == 'Y' && $committee['signup'] == 'Y' && $availableSeats > 0) {

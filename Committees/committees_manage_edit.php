@@ -72,6 +72,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('signup')->required();
 
     $row = $form->addRow();
+        $row->addLabel('file', 'Logo')->description('125x125px jpg/png/gif');
+        $row->addFileUpload('file')
+            ->accepts('.jpg,.jpeg,.gif,.png')
+            ->setAttachment('logo', $_SESSION[$guid]['absoluteURL'], $values['logo']);
+
+    $row = $form->addRow();
         $column = $row->addColumn()->setClass('');
         $column->addLabel('description', __('Description'));
         $column->addEditor('description', $guid);

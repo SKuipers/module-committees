@@ -40,7 +40,7 @@ class CommitteeGateway extends QueryableGateway
         $query = $this
             ->newQuery()
             ->from($this->getTableName())
-            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.active', 'committeesCommittee.signup', "COUNT(DISTINCT committeesMember.gibbonPersonID) as members", "SUM(CASE WHEN committeesRole.signup = 'Y' THEN committeesRole.seats ELSE 0 END) as totalSeats", "COUNT(DISTINCT CASE WHEN memberRole.signup = 'Y' THEN committeesMember.gibbonPersonID  END) as usedSeats"])
+            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.logo', 'committeesCommittee.active', 'committeesCommittee.signup', "COUNT(DISTINCT committeesMember.gibbonPersonID) as members", "SUM(CASE WHEN committeesRole.signup = 'Y' THEN committeesRole.seats ELSE 0 END) as totalSeats", "COUNT(DISTINCT CASE WHEN memberRole.signup = 'Y' THEN committeesMember.gibbonPersonID  END) as usedSeats"])
             ->leftJoin('committeesRole', 'committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
             ->leftJoin('committeesMember', 'committeesMember.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
             ->leftJoin('committeesRole as memberRole', 'committeesMember.committeesRoleID=memberRole.committeesRoleID')

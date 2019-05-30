@@ -33,6 +33,7 @@ $moduleTables[] = "CREATE TABLE `committeesCommittee` (
     `gibbonSchoolYearID` INT(3) UNSIGNED ZEROFILL NULL,
     `name` VARCHAR(120) NOT NULL,
     `description` TEXT NULL,
+    `logo` VARCHAR(255) NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     `signup` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     PRIMARY KEY (`committeesCommitteeID`)

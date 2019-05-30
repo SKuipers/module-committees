@@ -38,8 +38,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $data = [
         'name'        => $_POST['name'] ?? '',
         'active'      => $_POST['active'] ?? '',
-        'signup'    => $_POST['signup'] ?? '',
+        'signup'      => $_POST['signup'] ?? '',
         'description' => $_POST['description'] ?? '',
+        'logo'        => $_POST['logo'] ?? null,
     ];
 
     // Validate the required values are present
@@ -61,6 +62,15 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $URL .= '&return=error7';
         header("Location: {$URL}");
         exit;
+    }
+
+    // Move attached file, if there is one
+    if (!empty($_FILES['file']['tmp_name'])) {
+        $file = $_FILES['file'] ?? null;
+        
+        // Upload the file, return the /uploads relative path
+        $fileUploader = new Gibbon\FileUploader($pdo, $gibbon->session);
+        $data['logo'] = $fileUploader->uploadFromPost($file, $data['name']);
     }
 
     // Update the record
