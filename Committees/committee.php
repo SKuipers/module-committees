@@ -103,7 +103,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     }
 
     // QUERY
-    $criteria = $committeeMemberGateway->newQueryCriteria()->fromPOST();
+    $criteria = $committeeMemberGateway->newQueryCriteria()
+        ->sortBy(['type', 'surname', 'preferredName'])
+        ->fromPOST();
     $members = $committeeMemberGateway->queryMembersByCommittee($criteria, $committeesCommitteeID);
 
     // GRID TABLE
@@ -116,7 +118,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     $table->addMetaData('blankSlate', __m('There are currently no members in this committee.'));
 
     if ($canManage) {
-        $table->addHeaderAction('edit', __('Edit'))
+        $table->addHeaderAction('members', __('Manage Members'))
+            ->setIcon('attendance')
             ->addParam('gibbonSchoolYearID', $committee['gibbonSchoolYearID'])
             ->addParam('committeesCommitteeID', $committeesCommitteeID)
             ->setURL('/modules/Committees/committees_manage_members.php')

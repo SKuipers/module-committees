@@ -43,6 +43,7 @@ $moduleTables[] = "CREATE TABLE `committeesRole` (
     `committeesRoleID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
     `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     `name` VARCHAR(60) NOT NULL,
+    `type` ENUM('Chair','Member') NOT NULL DEFAULT 'Member',
     `seats` INT(4) NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     `signup` ENUM('Y','N') NOT NULL DEFAULT 'N',

@@ -41,10 +41,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $data = [
         'committeesCommitteeID' => $_POST['committeesCommitteeID'] ?? '',
         'committeesRoleID'      => $_POST['committeesRoleID'] ?? '',
-        'name'       => $_POST['name'] ?? '',
-        'active'     => $_POST['active'] ?? '',
+        'name'   => $_POST['name'] ?? '',
+        'type'   => $_POST['type'] ?? '',
+        'active' => $_POST['active'] ?? '',
         'signup' => $_POST['signup'] ?? 'N',
-        'seats'      => $_POST['seats'] ?? null,
+        'seats'  => $_POST['seats'] ?? null,
     ];
 
     // Validate the required values are present

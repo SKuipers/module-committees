@@ -21,6 +21,7 @@ use Gibbon\Tables\DataTable;
 use Gibbon\Services\Format;
 use Gibbon\Domain\School\SchoolYearGateway;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
+use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage.php') == false) {
     // Access denied
@@ -60,6 +61,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     $committeeGateway = $container->get(CommitteeGateway::class);
+    $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
 
     // QUERY
     $criteria = $committeeGateway->newQueryCriteria()
@@ -67,6 +69,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         ->fromPOST();
 
     $committees = $committeeGateway->queryCommittees($criteria, $gibbonSchoolYearID);
+
+    // Join a set of chair people per committee
+    $committeesIDs = $committees->getColumn('committeesCommitteeID');
+    $chairData = $committeeMemberGateway->selectChairPeopleByCommittee($committeesIDs)->fetchGrouped();
+    $committees->joinColumn('committeesCommitteeID', 'chair', $chairData);
 
     // DATA TABLE
     $table = DataTable::createPaginated('committees', $criteria);
@@ -87,8 +94,13 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
             $url = './index.php?q=/modules/Committees/committee.php&committeesCommitteeID='.$committee['committeesCommitteeID'];
             return Format::link($url, $committee['name']);
         });
+    $table->addColumn('chair', __m('Chair'))
+        ->format(function ($committee) {
+            return Format::nameList($committee['chair'], 'Staff', false, true);
+        });
     $table->addColumn('members', __m('Members'))->width('10%');
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
+    $table->addColumn('signup', __m('Sign-up'))->format(Format::using('yesNo', 'signup'));
 
     // ACTIONS
     $table->addActionColumn()

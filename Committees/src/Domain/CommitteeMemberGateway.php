@@ -108,4 +108,23 @@ class CommitteeMemberGateway extends QueryableGateway
 
         return $this->runQuery($query, $criteria);
     }
+
+    public function selectChairPeopleByCommittee($committeesCommitteeID)
+    {
+        $committeesCommitteeIDList = is_array($committeesCommitteeID)? $committeesCommitteeID : [$committeesCommitteeID];
+
+        $data = ['committeesCommitteeIDList' => implode(',', $committeesCommitteeIDList)];
+        $sql = "SELECT committeesCommittee.committeesCommitteeID, gibbonPerson.gibbonPersonID, gibbonPerson.title, gibbonPerson.preferredName, gibbonPerson.surname
+            FROM committeesCommittee 
+            JOIN committeesRole ON (committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID)
+            JOIN committeesMember ON (committeesMember.committeesRoleID=committeesRole.committeesRoleID)
+            JOIN gibbonPerson ON (gibbonPerson.gibbonPersonID=committeesMember.gibbonPersonID)
+            WHERE FIND_IN_SET(committeesCommittee.committeesCommitteeID, :committeesCommitteeIDList)
+            AND committeesCommittee.active='Y' 
+            AND committeesRole.active='Y' 
+            AND committeesRole.type='Chair'
+            ORDER BY gibbonPerson.surname, gibbonPerson.preferredName";
+
+        return $this->db()->select($sql, $data);
+    }
 }

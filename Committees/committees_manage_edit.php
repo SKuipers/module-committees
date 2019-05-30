@@ -108,9 +108,16 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return $row;
     });
 
+    $table->addHeaderAction('members', __('Manage Members'))
+        ->setIcon('attendance')
+        ->addParam('gibbonSchoolYearID', $gibbonSchoolYearID)
+        ->addParam('committeesCommitteeID', $committeesCommitteeID)
+        ->setURL('/modules/Committees/committees_manage_members.php')
+        ->displayLabel();
+
     $table->addColumn('name', __('Name'));
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
-    $table->addColumn('signup', __m('Sign-up?'))->format(Format::using('yesNo', 'signup'));
+    $table->addColumn('signup', __m('Sign-up'))->format(Format::using('yesNo', 'signup'));
     $table->addColumn('seats', __m('Seats'))->width('10%');
     $table->addColumn('members', __m('Members'))->width('10%');
 
@@ -144,6 +151,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $row = $form->addRow();
         $row->addLabel('name', __('Name'))->description(__m('Must be unique for this committee.'));
         $row->addTextField('name')->maxLength(60)->required();
+
+    $row = $form->addRow();
+        $row->addLabel('type', __('Type'));
+        $row->addSelect('type')->fromArray(['Member' => __m('Member'), 'Chair' => __m('Chair')])->required()->selected('Member');
 
     $row = $form->addRow();
         $row->addLabel('active', __('Active'));

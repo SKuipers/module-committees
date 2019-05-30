@@ -66,6 +66,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addTextField('name')->maxLength(60)->required();
 
     $row = $form->addRow();
+        $row->addLabel('type', __('Type'));
+        $row->addSelect('type')->fromArray(['Member' => __m('Member'), 'Chair' => __m('Chair')])->required();
+
+    $row = $form->addRow();
         $row->addLabel('active', __('Active'));
         $row->addYesNo('active')->required();
 
