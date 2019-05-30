@@ -41,7 +41,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         'committeesCommitteeID' => $_POST['committeesCommitteeID'] ?? '',
         'name'       => $_POST['name'] ?? '',
         'active'     => $_POST['active'] ?? '',
-        'selectable' => $_POST['selectable'] ?? 'N',
+        'signup' => $_POST['signup'] ?? 'N',
         'seats'      => $_POST['seats'] ?? null,
     ];
 

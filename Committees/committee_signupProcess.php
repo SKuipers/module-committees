@@ -62,7 +62,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
 
     // Ensure the committee signup is available
     $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
-    if ($signupActive != 'Y' || $committee['register'] != 'Y') {
+    if ($signupActive != 'Y' || $committee['signup'] != 'Y') {
         $URL .= '&return=error3';
         header("Location: {$URL}");
         exit;
@@ -71,7 +71,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     // Ensure there are seats available
     $memberCount = $committeeRoleGateway->getMemberCountByRole($data['committeesRoleID']);
     $availableSeats = intval($role['seats']) - $memberCount;
-    if ($role['selectable'] != 'Y' || $availableSeats <= 0) {
+    if ($role['signup'] != 'Y' || $availableSeats <= 0) {
         $URL .= '&return=error4';
         header("Location: {$URL}");
         exit;

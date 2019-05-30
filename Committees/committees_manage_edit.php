@@ -68,8 +68,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('register', __m('Can Sign-up?'))->description(__m('Assuming system-wide sign-up is open, should this committee be available to select?'));
-        $row->addYesNo('register')->required();
+        $row->addLabel('signup', __m('Can Sign-up?'))->description(__m('Assuming system-wide sign-up is open, should this committee be available to select?'));
+        $row->addYesNo('signup')->required();
 
     $row = $form->addRow();
         $column = $row->addColumn()->setClass('');
@@ -104,7 +104,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $table->addColumn('name', __('Name'));
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
-    $table->addColumn('selectable', __m('Sign-up?'))->format(Format::using('yesNo', 'selectable'));
+    $table->addColumn('signup', __m('Sign-up?'))->format(Format::using('yesNo', 'signup'));
     $table->addColumn('seats', __m('Seats'))->width('10%');
     $table->addColumn('members', __m('Members'))->width('10%');
 
@@ -144,8 +144,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('selectable', __m('Can Sign-up?'))->description(__m('Is this role selectable during committee sign-up?'));
-        $row->addYesNo('selectable')->required();
+        $row->addLabel('signup', __m('Can Sign-up?'))->description(__m('Is this role selectable during committee sign-up?'));
+        $row->addYesNo('signup')->required();
         
     $row = $form->addRow();
         $row->addLabel('seats', __m('Seats'))->description(__m('The number of available spaces for new members during sign-up. This does not limit members added manually.'));

@@ -79,7 +79,7 @@ class CommitteeMemberGateway extends QueryableGateway
             ->bindValue('committeesCommitteeID', $committeesCommitteeID)
             ->where("committeesCommittee.active = 'Y'")
             ->where("committeesRole.active = 'Y'")
-            ->where("committeesRole.selectable = 'Y'")
+            ->where("committeesRole.signup = 'Y'")
             ->groupBy(['committeesRole.committeesRoleID'])
             ->having('members < committeesRole.seats');
 

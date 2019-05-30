@@ -34,7 +34,7 @@ $moduleTables[] = "CREATE TABLE `committeesCommittee` (
     `name` VARCHAR(120) NOT NULL,
     `description` TEXT NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
-    `register` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+    `signup` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     PRIMARY KEY (`committeesCommitteeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
@@ -44,7 +44,7 @@ $moduleTables[] = "CREATE TABLE `committeesRole` (
     `name` VARCHAR(60) NOT NULL,
     `seats` INT(4) NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
-    `selectable` ENUM('Y','N') NOT NULL DEFAULT 'N',
+    `signup` ENUM('Y','N') NOT NULL DEFAULT 'N',
     PRIMARY KEY (`committeesRoleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 

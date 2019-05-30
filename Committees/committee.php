@@ -64,7 +64,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 
     // AVAILABLE SEATS
-    if ($canSignup && $signupActive == 'Y' && $committee['register'] == 'Y') {
+    if ($canSignup && $signupActive == 'Y' && $committee['signup'] == 'Y') {
         $criteria = $committeeMemberGateway->newQueryCriteria()
             ->sortBy('committeesRole.name')
             ->fromPOST();

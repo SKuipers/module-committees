@@ -38,7 +38,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         'gibbonSchoolYearID' => $_POST['gibbonSchoolYearID'] ?? '',
         'name'               => $_POST['name'] ?? '',
         'active'             => $_POST['active'] ?? '',
-        'register'           => $_POST['register'] ?? '',
+        'signup'           => $_POST['signup'] ?? '',
         'description'        => $_POST['description'] ?? '',
     ];
 

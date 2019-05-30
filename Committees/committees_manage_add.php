@@ -59,8 +59,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('register', __m('Can Sign-up?'))->description(__m('Assuming system-wide sign-up is open, should this committee be available to select?'));
-        $row->addYesNo('register')->required();
+        $row->addLabel('signup', __m('Can Sign-up?'))->description(__m('Assuming system-wide sign-up is open, should this committee be available to select?'));
+        $row->addYesNo('signup')->required();
 
     $row = $form->addRow();
         $column = $row->addColumn()->setClass('');

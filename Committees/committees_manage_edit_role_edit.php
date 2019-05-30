@@ -70,8 +70,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('active')->required();
 
     $row = $form->addRow();
-        $row->addLabel('selectable', __m('Can Sign-up?'))->description(__m('Is this role selectable during committee sign-up?'));
-        $row->addYesNo('selectable')->required();
+        $row->addLabel('signup', __m('Can Sign-up?'))->description(__m('Is this role selectable during committee sign-up?'));
+        $row->addYesNo('signup')->required();
         
     $row = $form->addRow();
         $row->addLabel('seats', __('Seats'))->description(__m('The number of available spaces for new members during sign-up. This does not limit members added manually.'));

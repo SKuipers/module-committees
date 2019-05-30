@@ -40,7 +40,7 @@ class CommitteeRoleGateway extends QueryableGateway
         $query = $this
             ->newQuery()
             ->from($this->getTableName())
-            ->cols(['committeesRole.committeesRoleID', 'committeesRole.name', 'committeesRole.active', 'committeesRole.seats', 'committeesRole.selectable', 'COUNT(DISTINCT committeesMember.gibbonPersonID) as members'])
+            ->cols(['committeesRole.committeesRoleID', 'committeesRole.name', 'committeesRole.active', 'committeesRole.seats', 'committeesRole.signup', 'COUNT(DISTINCT committeesMember.gibbonPersonID) as members'])
             ->innerJoin('committeesCommittee', 'committeesCommittee.committeesCommitteeID=committeesRole.committeesCommitteeID')
             ->leftJoin('committeesMember', 'committeesMember.committeesRoleID=committeesRole.committeesRoleID')
             ->where('committeesCommittee.committeesCommitteeID=:committeesCommitteeID')
