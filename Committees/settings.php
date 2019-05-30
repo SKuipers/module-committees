@@ -34,19 +34,19 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/settings.php') 
     $settingGateway = $container->get(SettingGateway::class);
 
     // FORM
-    $form = Form::create('settings', $_SESSION[$guid]['absoluteURL'].'/modules/Committees/settingsProcess.php');
+    $form = Form::create('settings', $gibbon->session->get('absoluteURL').'/modules/Committees/settingsProcess.php');
     $form->setTitle(__('Settings'));
 
-    $form->addHiddenValue('address', $_SESSION[$guid]['address']);
+    $form->addHiddenValue('address', $gibbon->session->get('address'));
 
     $setting = $settingGateway->getSettingByScope('Committees', 'signupActive', true);
     $row = $form->addRow();
-        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
+        $row->addLabel($setting['name'], __m($setting['nameDisplay']))->description(__m($setting['description']));
         $row->addYesNo($setting['name'])->required()->selected($setting['value']);
 
     $setting = $settingGateway->getSettingByScope('Committees', 'signupMaximum', true);
     $row = $form->addRow();
-        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
+        $row->addLabel($setting['name'], __m($setting['nameDisplay']))->description(__m($setting['description']));
         $row->addNumber($setting['name'])->required()->setValue($setting['value'])->minimum(1);
 
     $row = $form->addRow();

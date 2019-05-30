@@ -52,7 +52,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
     $table->setTitle(__m('Committees'));
 
     if ($canSignup && $signupActive == 'Y') {
-        $table->setDescription(Format::alert(__('Committee sign-up is available. A number next to a committee displays the currently available seats.'), 'success').'<br/>');
+        $table->setDescription(Format::alert(__m('Committee sign-up is available. A number next to a committee indicates the currently available seats.'), 'success').'<br/>');
     }
 
     $table->addMetaData('gridClass', 'content-center justify-center');

@@ -22,7 +22,7 @@ use Gibbon\Services\Format;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 
-if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit.php') == false) {
+if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit_role_edit.php') == false) {
     // Access denied
     $page->addError(__('You do not have access to this action.'));
 } else {
@@ -54,7 +54,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return;
     }
 
-    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/'.$gibbon->session->get('module')."/committees_manage_edit_role_editProcess.php?search=$search");
+    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_edit_role_editProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $committee['gibbonSchoolYearID']);

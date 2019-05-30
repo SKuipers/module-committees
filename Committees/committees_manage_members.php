@@ -18,9 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Tables\DataTable;
-use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Services\Format;
-use Gibbon\Domain\School\SchoolYearGateway;
+use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members.php') == false) {

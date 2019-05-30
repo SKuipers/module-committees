@@ -19,9 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 use Gibbon\Forms\Form;
 use Gibbon\Forms\DatabaseFormFactory;
+use Gibbon\Services\Format;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
-use Gibbon\Services\Format;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave.php') == false) {
     // Access denied
@@ -73,7 +73,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave
         $row->addSelectStaff('gibbonPersonID')->readonly()->selected($gibbon->session->get('gibbonPersonID'));
 
     $row = $form->addRow();
-        $row->addLabel('committeeLabel', __('Committee'));
+        $row->addLabel('committeeLabel', __m('Committee'));
         $row->addTextField('committee')->readonly()->setValue($committee['name']);
 
     $row = $form->addRow();

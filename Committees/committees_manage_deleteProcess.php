@@ -29,6 +29,7 @@ $URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/co
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_delete.php') == false) {
     $URL .= '&return=error0';
     header("Location: {$URL}");
+    exit;
 } elseif (empty($committeesCommitteeID)) {
     $URL .= '&return=error1';
     header("Location: {$URL}");

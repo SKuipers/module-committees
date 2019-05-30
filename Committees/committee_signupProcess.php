@@ -52,7 +52,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
 
     $committee = $committeeGateway->getByID($data['committeesCommitteeID']);
     $role = $committeeRoleGateway->getByID($data['committeesRoleID']);
-
+    
     // Validate the database relationships exist
     if (empty($committee) || empty($role)) {
         $URL .= '&return=error2';

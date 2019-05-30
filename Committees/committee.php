@@ -58,6 +58,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     echo $committee['description'];
     echo '</p>';
 
+    $canViewProfile = isActionAccessible($guid, $connection2, '/modules/Staff/staff_view_details.php');
+    $canManage = isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members.php');
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
     $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 
@@ -85,6 +87,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
                     $text .= '<img src="./themes/Default/img/attendance_large.png" class="w-16"><br/>';
                     $text .= $role['role'];
                     $url = './index.php?q=/modules/Committees/committee_signup.php&committeesCommitteeID='.$role['committeesCommitteeID'].'&committeesRoleID='.$role['committeesRoleID'];
+                    
                     return Format::link($url, $text, ['class' => 'inline-block relative text-gray-800 hover:text-blue-700']);
                 });
 
@@ -107,12 +110,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     $gridRenderer = new GridView($container->get('twig'));
     $table = $container->get(DataTable::class)->setRenderer($gridRenderer);
 
-    $table->setTitle(__('Members'));
+    $table->setTitle(__m('Members'));
     $table->addMetaData('gridClass', 'rounded-sm bg-blue-100 border py-2');
     $table->addMetaData('gridItemClass', 'w-1/2 sm:w-1/4 md:w-1/5 my-2 text-center');
     $table->addMetaData('blankSlate', __m('There are currently no members in this committee.'));
 
-    if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members.php')) {
+    if ($canManage) {
         $table->addHeaderAction('edit', __('Edit'))
             ->addParam('gibbonSchoolYearID', $committee['gibbonSchoolYearID'])
             ->addParam('committeesCommitteeID', $committeesCommitteeID)
@@ -125,7 +128,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
             return Format::userPhoto($person['image_240'], 'sm', '');
         });
 
-    $canViewProfile = isActionAccessible($guid, $connection2, '/modules/Staff/staff_view_details.php');
     $table->addColumn('name')
         ->setClass('text-xs font-bold mt-1')
         ->format(function ($person) use ($canViewProfile) {

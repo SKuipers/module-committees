@@ -29,7 +29,7 @@ $committeesRoleID = $_POST['committeesRoleID'] ?? '';
 
 $URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_edit_role_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID.'&committeesRoleID='.$committeesRoleID.'&search='.$search;
 
-if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit.php') == false) {
+if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit_role_edit.php') == false) {
     $URL .= '&return=error0';
     header("Location: {$URL}");
     exit;

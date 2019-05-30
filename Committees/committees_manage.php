@@ -18,9 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Tables\DataTable;
-use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Services\Format;
 use Gibbon\Domain\School\SchoolYearGateway;
+use Gibbon\Module\Committees\Domain\CommitteeGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage.php') == false) {
     // Access denied
@@ -45,17 +45,17 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         echo '</h2>';
 
         echo "<div class='linkTop'>";
-            if ($prevSchoolYear = $schoolYearGateway->getPreviousSchoolYearByID($gibbonSchoolYearID)) {
-                echo "<a href='".$gibbon->session->get('absoluteURL').'/index.php?q='.$_GET['q'].'&gibbonSchoolYearID='.$prevSchoolYear['gibbonSchoolYearID']."'>".__('Previous Year').'</a> ';
-            } else {
-                echo __('Previous Year').' ';
-            }
-			echo ' | ';
-			if ($nextSchoolYear = $schoolYearGateway->getNextSchoolYearByID($gibbonSchoolYearID)) {
-				echo "<a href='".$gibbon->session->get('absoluteURL').'/index.php?q='.$_GET['q'].'&gibbonSchoolYearID='.$nextSchoolYear['gibbonSchoolYearID']."'>".__('Next Year').'</a> ';
-			} else {
-				echo __('Next Year').' ';
-			}
+        if ($prevSchoolYear = $schoolYearGateway->getPreviousSchoolYearByID($gibbonSchoolYearID)) {
+            echo "<a href='".$gibbon->session->get('absoluteURL').'/index.php?q='.$_GET['q'].'&gibbonSchoolYearID='.$prevSchoolYear['gibbonSchoolYearID']."'>".__('Previous Year').'</a> ';
+        } else {
+            echo __('Previous Year').' ';
+        }
+        echo ' | ';
+        if ($nextSchoolYear = $schoolYearGateway->getNextSchoolYearByID($gibbonSchoolYearID)) {
+            echo "<a href='".$gibbon->session->get('absoluteURL').'/index.php?q='.$_GET['q'].'&gibbonSchoolYearID='.$nextSchoolYear['gibbonSchoolYearID']."'>".__('Next Year').'</a> ';
+        } else {
+            echo __('Next Year').' ';
+        }
         echo '</div>';
     }
 
@@ -87,7 +87,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
             $url = './index.php?q=/modules/Committees/committee.php&committeesCommitteeID='.$committee['committeesCommitteeID'];
             return Format::link($url, $committee['name']);
         });
-    $table->addColumn('members', __('Members'))->width('10%');
+    $table->addColumn('members', __m('Members'))->width('10%');
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
 
     // ACTIONS
@@ -101,7 +101,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
             $actions->addAction('delete', __('Delete'))
                     ->setURL('/modules/Committees/committees_manage_delete.php');
 
-            $actions->addAction('members', __('Manage Members'))
+            $actions->addAction('members', __m('Manage Members'))
                     ->setIcon('attendance')
                     ->setURL('/modules/Committees/committees_manage_members.php');
         });

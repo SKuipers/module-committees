@@ -18,9 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Tables\DataTable;
-use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Services\Format;
-use Gibbon\Domain\School\SchoolYearGateway;
+use Gibbon\Module\Committees\Domain\CommitteeGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.php') == false) {
     // Access denied
@@ -68,7 +67,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
                     ->setURL('/modules/Committees/committee.php');
             
             if ($canSignup && $signupActive == 'Y') {
-                $actions->addAction('leave', __('Leave Committee'))
+                $actions->addAction('leave', __m('Leave Committee'))
                         ->setIcon('iconCross')
                         ->setURL('/modules/Committees/committee_leave.php');
             }

@@ -34,7 +34,7 @@ $URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/co
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit.php') == false) {
     $URL .= '&return=error0';
     header("Location: {$URL}");
-} elseif (empty($committeesCommitteeID)) {
+} elseif (empty($committeesCommitteeID) || empty($committeesRoleID)) {
     $URL .= '&return=error1';
     header("Location: {$URL}");
     exit;

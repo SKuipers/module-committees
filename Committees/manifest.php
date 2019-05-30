@@ -48,7 +48,6 @@ $moduleTables[] = "CREATE TABLE `committeesRole` (
     PRIMARY KEY (`committeesRoleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
 $moduleTables[] = "CREATE TABLE `committeesMember` (
     `committeesMemberID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
     `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL,

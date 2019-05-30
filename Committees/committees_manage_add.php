@@ -45,7 +45,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         echo '</div>';
     }
 
-    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/'.$gibbon->session->get('module').'/committees_manage_addProcess.php?search='.$search);
+    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_addProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);

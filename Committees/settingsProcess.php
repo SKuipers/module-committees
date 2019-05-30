@@ -21,7 +21,7 @@ use Gibbon\Domain\System\SettingGateway;
 
 require_once '../../gibbon.php';
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/Committees/settings.php';
+$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/settings.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/settings.php') == false) {
     $URL .= '&return=error0';

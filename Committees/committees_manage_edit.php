@@ -18,10 +18,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Forms\Form;
+use Gibbon\Tables\DataTable;
 use Gibbon\Services\Format;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
-use Gibbon\Tables\DataTable;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit.php') == false) {
     // Access denied
@@ -53,7 +53,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return;
     }
 
-    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/'.$gibbon->session->get('module')."/committees_manage_editProcess.php?search=$search");
+    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_editProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
@@ -105,8 +105,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $table->addColumn('name', __('Name'));
     $table->addColumn('active', __('Active'))->format(Format::using('yesNo', 'active'));
     $table->addColumn('selectable', __m('Sign-up?'))->format(Format::using('yesNo', 'selectable'));
-    $table->addColumn('seats', __('Seats'))->width('10%');
-    $table->addColumn('members', __('Members'))->width('10%');
+    $table->addColumn('seats', __m('Seats'))->width('10%');
+    $table->addColumn('members', __m('Members'))->width('10%');
 
     // ACTIONS
     $table->addActionColumn()
@@ -127,7 +127,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     echo $table->render($roles);
 
     // ADD ROLE
-    $form = Form::create('committeesManageEdit', $gibbon->session->get('absoluteURL').'/modules/'.$gibbon->session->get('module').'/committees_manage_edit_role_addProcess.php?search='.$search);
+    $form = Form::create('committeesManageEdit', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_edit_role_addProcess.php?search='.$search);
 
     $form->addHiddenValue('address', $gibbon->session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
@@ -136,7 +136,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $form->addRow()->addHeading(__('Add Role'));
 
     $row = $form->addRow();
-        $row->addLabel('name', __('Name'))->description(__('Must be unique for this committee.'));
+        $row->addLabel('name', __('Name'))->description(__m('Must be unique for this committee.'));
         $row->addTextField('name')->maxLength(60)->required();
 
     $row = $form->addRow();
@@ -148,7 +148,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $row->addYesNo('selectable')->required();
         
     $row = $form->addRow();
-        $row->addLabel('seats', __('Seats'))->description(__m('The number of available spaces for new members during sign-up. This does not limit members added manually.'));
+        $row->addLabel('seats', __m('Seats'))->description(__m('The number of available spaces for new members during sign-up. This does not limit members added manually.'));
         $row->addNumber('seats')->onlyInteger(true)->setValue(1)->minimum(1);
 
     $row = $form->addRow();

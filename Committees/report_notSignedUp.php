@@ -28,8 +28,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
     // Proceed!
     $viewMode = $_REQUEST['format'] ?? '';
 
-    $viewMode = $_REQUEST['format'] ?? '';
-
     if (empty($viewMode)) {
         $page->breadcrumbs->add(__m('Staff Not Signed-up'));
 
@@ -51,7 +49,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
 
     // DATA TABLE
     $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $gibbon->session);
-    $table->setTitle(__('Staff Not Signed-up'));
+    $table->setTitle(__m('Staff Not Signed-up'));
 
     $table->addColumn('fullName', __('Name'))
         ->width('40%')
