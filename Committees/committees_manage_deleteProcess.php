@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
+use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
+use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
 
 require_once '../../gibbon.php';
 
@@ -36,7 +38,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     exit;
 } else {
     // Proceed!
+    $partialFail = false;
+
     $committeeGateway = $container->get(CommitteeGateway::class);
+    $committeeRoleGateway = $container->get(CommitteeRoleGateway::class);
+    $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
+
     $values = $committeeGateway->getByID($committeesCommitteeID);
 
     if (empty($values)) {
@@ -46,9 +53,23 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     $deleted = $committeeGateway->delete($committeesCommitteeID);
+    $partialFail &= !$deleted;
 
-    $URL .= !$deleted
-        ? '&return=error2'
+    $criteria = $committeeGateway->newQueryCriteria()->pageSize(0);
+    $roles = $committeeRoleGateway->queryRoles($criteria, $committeesCommitteeID);
+    foreach ($roles as $role) {
+        $deleted = $committeeRoleGateway->delete($role['committeesRoleID']);
+        $partialFail &= !$deleted;
+    }
+
+    $members = $committeeMemberGateway->queryMembersByCommittee($criteria, $committeesCommitteeID);
+    foreach ($members as $member) {
+        $deleted = $committeeMemberGateway->delete($member['committeesMemberID']);
+        $partialFail &= !$deleted;
+    }
+
+    $URL .= $partialFail
+        ? '&return=warning1'
         : '&return=success0';
 
     header("Location: {$URL}");
