@@ -79,6 +79,18 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $table = DataTable::createPaginated('committees', $criteria);
     $table->setTitle(__('View'));
 
+    if (!empty($nextSchoolYear)) {
+        $table->addHeaderAction('copy', __('Copy All To Next Year'))
+            ->setURL('/modules/Committees/committees_manage_copyProcess.php')
+            ->addParam('gibbonSchoolYearID', $gibbonSchoolYearID)
+            ->addParam('gibbonSchoolYearIDNext', $nextSchoolYear['gibbonSchoolYearID'])
+            ->setIcon('copy')
+            ->onClick('return confirm("'.__('Are you sure you want to continue?').' '.__('This operation cannot be undone.').'");')
+            ->displayLabel()
+            ->directLink()
+            ->append('&nbsp;|&nbsp;');
+    }
+
     $table->addHeaderAction('add', __('Add'))
         ->addParam('gibbonSchoolYearID', $gibbonSchoolYearID)
         ->setURL('/modules/Committees/committees_manage_add.php')
