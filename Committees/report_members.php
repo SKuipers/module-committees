@@ -51,14 +51,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_members.
     $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $gibbon->session);
     $table->setTitle(__m('Committee Membership'));
 
-    $table->addColumn('committee', __m('Committee'));
+    $table->addRowCountColumn($members->getPageFrom());
 
+    $table->addColumn('committee', __m('Committee'));
     $table->addColumn('fullName', __('Name'))
         ->sortable(['gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->format(function ($person) {
             return Format::name($person['title'], $person['preferredName'], $person['surname'], 'Staff', true, true);
         });
-
     $table->addColumn('role', __('Role'));
 
     echo $table->render($members);

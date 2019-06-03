@@ -51,13 +51,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
     $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $gibbon->session);
     $table->setTitle(__m('Staff Not Signed-up'));
 
+    $table->addRowCountColumn($members->getPageFrom());
+
     $table->addColumn('fullName', __('Name'))
         ->width('40%')
         ->sortable(['gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->format(function ($person) {
             return Format::name($person['title'], $person['preferredName'], $person['surname'], 'Staff', true, true);
         });
-
     $table->addColumn('jobTitle', __('Job Title'))
         ->format(function ($person) {
             return !empty($person['jobTitle']) ? $person['jobTitle'] : $person['type'];
