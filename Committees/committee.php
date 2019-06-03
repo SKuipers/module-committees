@@ -42,8 +42,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
 
     $committeesCommitteeID = $_GET['committeesCommitteeID'] ?? '';
 
+    $committeeGateway = $container->get(CommitteeGateway::class);
     $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
-    $committee = $container->get(CommitteeGateway::class)->getByID($committeesCommitteeID);
+
+    $committee = $committeeGateway->getByID($committeesCommitteeID);
 
     if (empty($committee)) {
         $page->addError(__('The specified record cannot be found.'));
@@ -58,8 +60,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     echo $committee['description'];
     echo '</p>';
 
+    $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
+    $canManage = $highestManageAction == 'Manage Committees_all' || ($highestManageAction == 'Manage Committees_myCommitteeChair' 
+        && $committeeGateway->isPersonCommitteeChair($committee['committeesCommitteeID'], $gibbon->session->get('gibbonPersonID')));
+
     $canViewProfile = isActionAccessible($guid, $connection2, '/modules/Staff/staff_view_details.php');
-    $canManage = isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members.php');
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
     $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 

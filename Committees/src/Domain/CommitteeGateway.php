@@ -76,4 +76,19 @@ class CommitteeGateway extends QueryableGateway
 
         return $this->runQuery($query, $criteria);
     }
+
+    public function isPersonCommitteeChair($committeesCommitteeID, $gibbonPersonID)
+    {
+        $data = ['committeesCommitteeID' => $committeesCommitteeID, 'gibbonPersonID' => $gibbonPersonID];
+        $sql = "SELECT gibbonPerson.gibbonPersonID
+                FROM gibbonPerson
+                JOIN committeesMember ON (committeesMember.gibbonPersonID=gibbonPerson.gibbonPersonID)
+                JOIN committeesRole ON (committeesRole.committeesRoleID=committeesMember.committeesRoleID)
+                JOIN committeesCommittee ON (committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID)
+                WHERE gibbonPerson.gibbonPersonID=:gibbonPersonID
+                AND committeesCommittee.committeesCommitteeID=:committeesCommitteeID
+                AND committeesRole.type='Chair'";
+
+        return !empty($this->db()->selectOne($sql, $data));
+    }
 }

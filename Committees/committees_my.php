@@ -39,7 +39,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
         ->sortBy('name', 'ASC')
         ->fromPOST();
 
-    $committees = $committeeGateway->queryCommitteesByMember($criteria, $gibbon->session->get('gibbonSchoolYearID'), $gibbon->session->get('gibbonPersonID'));
+    $gibbonPersonID = $gibbon->session->get('gibbonPersonID');
+    $committees = $committeeGateway->queryCommitteesByMember($criteria, $gibbon->session->get('gibbonSchoolYearID'), $gibbonPersonID);
+
+    $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
     $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
 
@@ -62,9 +65,19 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
     // ACTIONS
     $table->addActionColumn()
         ->addParam('committeesCommitteeID')
-        ->format(function ($committee, $actions) use ($canSignup, $signupActive) {
+        ->format(function ($committee, $actions) use ($canSignup, $signupActive, $highestManageAction, $committeeGateway, $gibbonPersonID) {
             $actions->addAction('view', __('View'))
                     ->setURL('/modules/Committees/committee.php');
+
+            if ($highestManageAction == 'Manage Committees_all' || 
+               ($highestManageAction == 'Manage Committees_myCommitteeChair' && $committeeGateway->isPersonCommitteeChair($committee['committeesCommitteeID'], $gibbonPersonID))) {
+                $actions->addAction('edit', __('Edit'))
+                        ->setURL('/modules/Committees/committees_manage_edit.php');
+
+                $actions->addAction('members', __m('Manage Members'))
+                        ->setIcon('attendance')
+                        ->setURL('/modules/Committees/committees_manage_members.php');
+            }
             
             if ($canSignup && $signupActive == 'Y') {
                 $actions->addAction('leave', __m('Leave Committee'))

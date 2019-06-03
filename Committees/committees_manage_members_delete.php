@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 use Gibbon\Forms\Prefab\DeleteForm;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
+use Gibbon\Module\Committees\Domain\CommitteeGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_members_delete.php') == false) {
     // Access denied
@@ -32,6 +33,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     if (empty($committeesCommitteeID) || empty($committeesMemberID)) {
         $page->addError(__('You have not specified one or more required parameters.'));
         return;
+    }
+
+    $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
+    if (empty($highestManageAction) || $highestManageAction == 'Manage Committees_myCommitteeChair') {
+        if (!$container->get(CommitteeGateway::class)->isPersonCommitteeChair($committeesCommitteeID, $gibbon->session->get('gibbonPersonID'))) {
+            $page->addError(__('You do not have access to this action.'));
+            return;
+        }
     }
 
     $values = $container->get(CommitteeMemberGateway::class)->getByID($committeesMemberID);
