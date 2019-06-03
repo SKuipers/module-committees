@@ -23,7 +23,7 @@ $description = "Manage committee members and sign-up.";
 $entryURL = "committees.php";
 $type = "Additional";
 $category = "Other";
-$version = "0.0.00";
+$version = "1.0.00";
 $author = "Sandra Kuipers";
 $url = "https://github.com/SKuipers";
 
@@ -79,9 +79,9 @@ $actionRows[] = [
     'defaultPermissionParent'   => 'N',
     'defaultPermissionSupport'  => 'N',
     'categoryPermissionStaff'   => 'Y',
-    'categoryPermissionStudent' => 'N',
-    'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionStudent' => 'Y',
+    'categoryPermissionParent'  => 'Y',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -99,9 +99,9 @@ $actionRows[] = [
     'defaultPermissionParent'   => 'N',
     'defaultPermissionSupport'  => 'N',
     'categoryPermissionStaff'   => 'Y',
-    'categoryPermissionStudent' => 'N',
-    'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionStudent' => 'Y',
+    'categoryPermissionParent'  => 'Y',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -119,9 +119,9 @@ $actionRows[] = [
     'defaultPermissionParent'   => 'N',
     'defaultPermissionSupport'  => 'N',
     'categoryPermissionStaff'   => 'Y',
-    'categoryPermissionStudent' => 'N',
-    'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionStudent' => 'Y',
+    'categoryPermissionParent'  => 'Y',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -141,7 +141,7 @@ $actionRows[] = [
     'categoryPermissionStaff'   => 'Y',
     'categoryPermissionStudent' => 'N',
     'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -153,15 +153,15 @@ $actionRows[] = [
     'entryURL'                  => 'committees_manage_edit.php',
     'entrySidebar'              => 'Y',
     'menuShow'                  => 'N',
-    'defaultPermissionAdmin'    => 'Y',
+    'defaultPermissionAdmin'    => 'N',
     'defaultPermissionTeacher'  => 'Y',
     'defaultPermissionStudent'  => 'N',
     'defaultPermissionParent'   => 'N',
     'defaultPermissionSupport'  => 'N',
     'categoryPermissionStaff'   => 'Y',
-    'categoryPermissionStudent' => 'N',
-    'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionStudent' => 'Y',
+    'categoryPermissionParent'  => 'Y',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -181,7 +181,7 @@ $actionRows[] = [
     'categoryPermissionStaff'   => 'Y',
     'categoryPermissionStudent' => 'N',
     'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -199,9 +199,9 @@ $actionRows[] = [
     'defaultPermissionParent'   => 'N',
     'defaultPermissionSupport'  => 'N',
     'categoryPermissionStaff'   => 'Y',
-    'categoryPermissionStudent' => 'N',
-    'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionStudent' => 'Y',
+    'categoryPermissionParent'  => 'Y',
+    'categoryPermissionOther'   => 'Y',
 ];
 
 $actionRows[] = [
@@ -219,7 +219,7 @@ $actionRows[] = [
     'defaultPermissionParent'   => 'N',
     'defaultPermissionSupport'  => 'N',
     'categoryPermissionStaff'   => 'Y',
-    'categoryPermissionStudent' => 'N',
-    'categoryPermissionParent'  => 'N',
-    'categoryPermissionOther'   => 'N',
+    'categoryPermissionStudent' => 'Y',
+    'categoryPermissionParent'  => 'Y',
+    'categoryPermissionOther'   => 'Y',
 ];
