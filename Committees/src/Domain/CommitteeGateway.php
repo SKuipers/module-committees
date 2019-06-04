@@ -39,9 +39,15 @@ class CommitteeGateway extends QueryableGateway
     {
         $query = $this
             ->newQuery()
+            ->distinct()
             ->from($this->getTableName())
-            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.logo', 'committeesCommittee.active', 'committeesCommittee.signup', "COUNT(DISTINCT committeesMember.gibbonPersonID) as members", "SUM(DISTINCT CASE WHEN committeesRole.signup = 'Y' THEN committeesRole.seats ELSE 0 END) as totalSeats", "COUNT(DISTINCT CASE WHEN memberRole.signup = 'Y' THEN committeesMember.gibbonPersonID  END) as usedSeats"])
-            ->leftJoin('committeesRole', 'committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
+            ->cols(['committeesCommittee.committeesCommitteeID', 'committeesCommittee.name', 'committeesCommittee.description', 'committeesCommittee.logo', 'committeesCommittee.active', 'committeesCommittee.signup', "COUNT(DISTINCT committeesMember.gibbonPersonID) as members", "seats.totalSeats", "COUNT(DISTINCT CASE WHEN memberRole.signup = 'Y' THEN committeesMember.gibbonPersonID  END) as usedSeats"])
+            ->joinSubSelect(
+                'LEFT',
+                "SELECT DISTINCT committeesRole.committeesCommitteeID, SUM(CASE WHEN committeesRole.signup = 'Y' THEN committeesRole.seats ELSE 0 END) as totalSeats FROM committeesRole GROUP BY committeesRole.committeesCommitteeID",
+                'seats',
+                'seats.committeesCommitteeID=committeesCommittee.committeesCommitteeID'
+            )
             ->leftJoin('committeesMember', 'committeesMember.committeesCommitteeID=committeesCommittee.committeesCommitteeID')
             ->leftJoin('committeesRole as memberRole', 'committeesMember.committeesRoleID=memberRole.committeesRoleID')
             ->where('committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID')
