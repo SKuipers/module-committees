@@ -47,8 +47,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
-    if (empty($highestManageAction) || $highestManageAction == 'Manage Committees_myCommitteeChair') {
-        if (!$container->get(CommitteeGateway::class)->isPersonCommitteeChair($committeesCommitteeID, $gibbon->session->get('gibbonPersonID'))) {
+    if (empty($highestManageAction) || $highestManageAction == 'Manage Committees_myCommitteeAdmin') {
+        if (!$container->get(CommitteeGateway::class)->isPersonCommitteeAdmin($committeesCommitteeID, $gibbon->session->get('gibbonPersonID'))) {
             $page->addError(__('You do not have access to this action.'));
             return;
         }
@@ -75,7 +75,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $row = $form->addRow();
         $row->addLabel('type', __('Type'));
-        $row->addSelect('type')->fromArray(['Member' => __m('Member'), 'Chair' => __m('Chair')])->required();
+        $row->addSelect('type')->fromArray(['Member' => __m('Member'), 'Admin' => __m('Admin'), 'Chair' => __m('Chair')])->required();
 
     $row = $form->addRow();
         $row->addLabel('active', __('Active'));

@@ -23,7 +23,7 @@ $description = "Manage committee members and sign-up.";
 $entryURL = "committees.php";
 $type = "Additional";
 $category = "Other";
-$version = "1.0.00";
+$version = "1.0.01";
 $author = "Sandra Kuipers";
 $url = "https://github.com/SKuipers";
 
@@ -43,7 +43,7 @@ $moduleTables[] = "CREATE TABLE `committeesRole` (
     `committeesRoleID` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
     `committeesCommitteeID` INT(10) UNSIGNED ZEROFILL NOT NULL,
     `name` VARCHAR(60) NOT NULL,
-    `type` ENUM('Chair','Member') NOT NULL DEFAULT 'Member',
+    `type` ENUM('Chair','Admin','Member') NOT NULL DEFAULT 'Member',
     `seats` INT(4) NULL,
     `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
     `signup` ENUM('Y','N') NOT NULL DEFAULT 'N',
@@ -145,7 +145,7 @@ $actionRows[] = [
 ];
 
 $actionRows[] = [
-    'name'                      => 'Manage Committees_myCommitteeChair',
+    'name'                      => 'Manage Committees_myCommitteeAdmin',
     'precedence'                => '0',
     'category'                  => 'Administration',
     'description'               => '',

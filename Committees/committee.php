@@ -61,8 +61,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     echo '</p>';
 
     $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
-    $canManage = $highestManageAction == 'Manage Committees_all' || ($highestManageAction == 'Manage Committees_myCommitteeChair' 
-        && $committeeGateway->isPersonCommitteeChair($committee['committeesCommitteeID'], $gibbon->session->get('gibbonPersonID')));
+    $canManage = $highestManageAction == 'Manage Committees_all' || ($highestManageAction == 'Manage Committees_myCommitteeAdmin' 
+        && $committeeGateway->isPersonCommitteeAdmin($committee['committeesCommitteeID'], $gibbon->session->get('gibbonPersonID')));
 
     $canViewProfile = isActionAccessible($guid, $connection2, '/modules/Staff/staff_view_details.php');
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');

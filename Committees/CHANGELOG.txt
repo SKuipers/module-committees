@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+v1.0.01
+-------
+Added an admin role type who can also manage their own committee
+
 v1.0.00
 -------
 Initial feature set:

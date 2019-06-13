@@ -37,12 +37,12 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
     }
 
     $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
-
+    
     // QUERY
     $criteria = $committeeMemberGateway->newQueryCriteria()
         ->sortBy('committeesCommittee.name', 'ASC')
         ->sortBy(['gibbonPerson.surname', 'gibbonPerson.preferredName'])
-        ->filterBy('active', 'Y')
+        ->pageSize(!empty($viewMode) ? 0 : 50)
         ->fromPOST();
 
     $members = $committeeMemberGateway->queryStaffWhoAreNotMembers($criteria, $gibbon->session->get('gibbonSchoolYearID'));
@@ -50,6 +50,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
     // DATA TABLE
     $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $gibbon->session);
     $table->setTitle(__m('Staff Not Signed-up'));
+    $table->setDescription(__m('By default this report shows teaching staff who have not signed-up for a committee. You can use the filters to view other staff types, or all staff.'));
+
+    $table->addMetaData('filterOptions', [
+        'all:on'        => __('All Staff'),
+        'type:teaching' => __('Staff Type').': '.__('Teaching'),
+        'type:support'  => __('Staff Type').': '.__('Support'),
+        'type:other'    => __('Staff Type').': '.__('Other'),
+    ]);
 
     $table->addRowCountColumn($members->getPageFrom());
 
@@ -60,6 +68,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
             return Format::name($person['title'], $person['preferredName'], $person['surname'], 'Staff', true, true);
         });
     $table->addColumn('jobTitle', __('Job Title'))
+        ->description(__('Type'))
         ->format(function ($person) {
             return !empty($person['jobTitle']) ? $person['jobTitle'] : $person['type'];
         });

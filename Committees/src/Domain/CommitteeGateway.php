@@ -83,7 +83,7 @@ class CommitteeGateway extends QueryableGateway
         return $this->runQuery($query, $criteria);
     }
 
-    public function isPersonCommitteeChair($committeesCommitteeID, $gibbonPersonID)
+    public function isPersonCommitteeAdmin($committeesCommitteeID, $gibbonPersonID)
     {
         $data = ['committeesCommitteeID' => $committeesCommitteeID, 'gibbonPersonID' => $gibbonPersonID];
         $sql = "SELECT gibbonPerson.gibbonPersonID
@@ -93,7 +93,7 @@ class CommitteeGateway extends QueryableGateway
                 JOIN committeesCommittee ON (committeesRole.committeesCommitteeID=committeesCommittee.committeesCommitteeID)
                 WHERE gibbonPerson.gibbonPersonID=:gibbonPersonID
                 AND committeesCommittee.committeesCommitteeID=:committeesCommitteeID
-                AND committeesRole.type='Chair'";
+                AND (committeesRole.type='Chair' OR committeesRole.type='Admin')";
 
         return !empty($this->db()->selectOne($sql, $data));
     }

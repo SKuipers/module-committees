@@ -70,7 +70,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
                     ->setURL('/modules/Committees/committee.php');
 
             if ($highestManageAction == 'Manage Committees_all' || 
-               ($highestManageAction == 'Manage Committees_myCommitteeChair' && $committeeGateway->isPersonCommitteeChair($committee['committeesCommitteeID'], $gibbonPersonID))) {
+               ($highestManageAction == 'Manage Committees_myCommitteeAdmin' && $committeeGateway->isPersonCommitteeAdmin($committee['committeesCommitteeID'], $gibbonPersonID))) {
                 $actions->addAction('edit', __('Edit'))
                         ->setURL('/modules/Committees/committees_manage_edit.php');
 

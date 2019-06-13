@@ -101,10 +101,18 @@ class CommitteeMemberGateway extends QueryableGateway
             ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
             ->groupBy(['gibbonStaff.gibbonPersonID']);
 
-        if (!$allStaff) {
+        if (!$criteria->hasFilter('all')) {
             $query->innerJoin('gibbonRole', 'FIND_IN_SET(gibbonRole.gibbonRoleID, gibbonPerson.gibbonRoleIDAll)')
                   ->where("(gibbonRole.name LIKE '%Leader%' OR gibbonRole.name LIKE '%Teacher%' OR gibbonStaff.type LIKE 'Teach')");
         }
+        
+        $criteria->addFilterRules([
+            'type' => function ($query, $type) {
+                return $query
+                    ->where('gibbonStaff.type=:type')
+                    ->bindValue('type', $type);
+            },
+        ]);
 
         return $this->runQuery($query, $criteria);
     }
