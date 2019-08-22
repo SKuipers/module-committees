@@ -51,6 +51,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $deleted = $committeeRoleGateway->delete($committeesRoleID);
 
+    // Delete existing members of this role
+    $data = ['committeesCommitteeID' => $committeesCommitteeID, 'committeesRoleID' => $committeesRoleID];
+    $sql = "DELETE FROM committeesMember WHERE committeesCommitteeID=:committeesCommitteeID AND committeesRoleID=:committeesRoleID";
+    $pdo->statement($sql, $data);
+
     $URL .= !$deleted
         ? '&return=error2'
         : '&return=success0';
