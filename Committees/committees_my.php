@@ -35,7 +35,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
     $committeeGateway = $container->get(CommitteeGateway::class);
 
     // QUERY
-    $criteria = $committeeGateway->newQueryCriteria()
+    $criteria = $committeeGateway->newQueryCriteria(true)
         ->sortBy('name', 'ASC')
         ->fromPOST();
 

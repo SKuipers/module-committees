@@ -55,7 +55,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $deleted = $committeeGateway->delete($committeesCommitteeID);
     $partialFail &= !$deleted;
 
-    $criteria = $committeeGateway->newQueryCriteria()->pageSize(0);
+    $criteria = $committeeGateway->newQueryCriteria();
     $roles = $committeeRoleGateway->queryRoles($criteria, $committeesCommitteeID);
     foreach ($roles as $role) {
         $deleted = $committeeRoleGateway->delete($role['committeesRoleID']);

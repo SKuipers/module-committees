@@ -70,7 +70,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
 
     // AVAILABLE SEATS
     if ($canSignup && $signupActive == 'Y' && $committee['signup'] == 'Y') {
-        $criteria = $committeeMemberGateway->newQueryCriteria()
+        $criteria = $committeeMemberGateway->newQueryCriteria(true)
             ->sortBy('committeesRole.name')
             ->fromPOST();
         $seats = $committeeMemberGateway->queryAvailableSeats($criteria, $committeesCommitteeID);
@@ -108,7 +108,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
     }
 
     // QUERY
-    $criteria = $committeeMemberGateway->newQueryCriteria()
+    $criteria = $committeeMemberGateway->newQueryCriteria(true)
         ->sortBy(['committeesRole.type', 'gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->fromPOST();
     $members = $committeeMemberGateway->queryMembersByCommittee($criteria, $committeesCommitteeID);

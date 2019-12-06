@@ -63,7 +63,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     // QUERY
-    $criteria = $committeeGateway->newQueryCriteria()
+    $criteria = $committeeGateway->newQueryCriteria(true)
         ->sortBy(['committeesRole.type', 'gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->fromPOST();
 

@@ -102,7 +102,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     // MANAGE ROLES
     $committeeRoleGateway = $container->get(CommitteeRoleGateway::class);
-    $criteria = $committeeRoleGateway->newQueryCriteria()
+    $criteria = $committeeRoleGateway->newQueryCriteria(true)
         ->sortBy('name', 'ASC')
         ->fromPOST();
 

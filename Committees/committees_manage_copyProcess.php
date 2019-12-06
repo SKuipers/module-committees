@@ -45,7 +45,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $committeeGateway = $container->get(CommitteeGateway::class);
     $committeeRoleGateway = $container->get(CommitteeRoleGateway::class);
 
-    $criteria = $committeeGateway->newQueryCriteria()->pageSize(0);
+    $criteria = $committeeGateway->newQueryCriteria();
     $committees = $committeeGateway->queryCommittees($criteria, $gibbonSchoolYearID)->toArray();
 
     foreach ($committees as $committee) {

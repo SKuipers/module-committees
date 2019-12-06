@@ -39,7 +39,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
     $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
     
     // QUERY
-    $criteria = $committeeMemberGateway->newQueryCriteria()
+    $criteria = $committeeMemberGateway->newQueryCriteria(true)
         ->sortBy('committeesCommittee.name', 'ASC')
         ->sortBy(['gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->pageSize(!empty($viewMode) ? 0 : 50)
