@@ -22,9 +22,9 @@ use Gibbon\Module\Committees\Domain\CommitteeGateway;
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';
-$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $session->get('gibbonSchoolYearID');
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_add.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&search='.$search;
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_add.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_add.php') == false) {
     $URL .= '&return=error0';
@@ -62,7 +62,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         $file = $_FILES['file'] ?? null;
         
         // Upload the file, return the /uploads relative path
-        $fileUploader = new Gibbon\FileUploader($pdo, $gibbon->session);
+        $fileUploader = new Gibbon\FileUploader($pdo, $session);
         $data['logo'] = $fileUploader->uploadFromPost($file, $data['name']);
     }
 

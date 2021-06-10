@@ -23,8 +23,8 @@ require_once '../../gibbon.php';
 
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committee_leave.php&committeesCommitteeID='.$committeesCommitteeID;
-$URLSuccess = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_my.php';
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Committees/committee_leave.php&committeesCommitteeID='.$committeesCommitteeID;
+$URLSuccess = $session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_my.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave.php') == false) {
     $URL .= '&return=error0';
@@ -37,7 +37,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave
     $data = [
         'committeesCommitteeID' => $committeesCommitteeID,
         'committeesMemberID'    => $_POST['committeesMemberID'] ?? '',
-        'gibbonPersonID'        => $gibbon->session->get('gibbonPersonID'),
+        'gibbonPersonID'        => $session->get('gibbonPersonID'),
     ];
 
     // Validate the required values are present

@@ -47,7 +47,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave
     $committeeMemberGateway = $container->get(CommitteeMemberGateway::class);
 
     $committee = $committeeGateway->getByID($committeesCommitteeID);
-    $member = $committeeMemberGateway->selectBy(['committeesCommitteeID' => $committeesCommitteeID, 'gibbonPersonID' => $gibbon->session->get('gibbonPersonID')])->fetch();
+    $member = $committeeMemberGateway->selectBy(['committeesCommitteeID' => $committeesCommitteeID, 'gibbonPersonID' => $session->get('gibbonPersonID')])->fetch();
 
     if (empty($committee) || empty($member)) {
         $page->addError(__('The specified record cannot be found.'));
@@ -61,16 +61,16 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave
         echo Format::alert(__m('This action will remove you from the selected committee.').' '.__m('Sign-up is not currently active, you will not be able to automatically join a new committee.'), 'warning');
     }
 
-    $form = Form::create('committeesLeave', $gibbon->session->get('absoluteURL').'/modules/Committees/committee_leaveProcess.php');
+    $form = Form::create('committeesLeave', $session->get('absoluteURL').'/modules/Committees/committee_leaveProcess.php');
     $form->setFactory(DatabaseFormFactory::create($pdo));
     
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
     $form->addHiddenValue('committeesMemberID', $member['committeesMemberID']);
 
     $row = $form->addRow();
         $row->addLabel('gibbonPersonIDLabel', __('Person'));
-        $row->addSelectStaff('gibbonPersonID')->readonly()->selected($gibbon->session->get('gibbonPersonID'));
+        $row->addSelectStaff('gibbonPersonID')->readonly()->selected($session->get('gibbonPersonID'));
 
     $row = $form->addRow();
         $row->addLabel('committeeLabel', __m('Committee'));

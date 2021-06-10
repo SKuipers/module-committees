@@ -39,8 +39,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
         ->sortBy('name', 'ASC')
         ->fromPOST();
 
-    $gibbonPersonID = $gibbon->session->get('gibbonPersonID');
-    $committees = $committeeGateway->queryCommitteesByMember($criteria, $gibbon->session->get('gibbonSchoolYearID'), $gibbonPersonID);
+    $gibbonPersonID = $session->get('gibbonPersonID');
+    $committees = $committeeGateway->queryCommitteesByMember($criteria, $session->get('gibbonSchoolYearID'), $gibbonPersonID);
 
     $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');

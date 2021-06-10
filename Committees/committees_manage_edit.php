@@ -29,7 +29,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 } else {
     //Proceed!
     $search = $_GET['search'] ?? '';
-    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $session->get('gibbonSchoolYearID');
 
     $page->breadcrumbs
         ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
@@ -49,7 +49,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
     if (empty($highestManageAction) || $highestManageAction == 'Manage Committees_myCommitteeAdmin') {
-        if (!$committeeGateway->isPersonCommitteeAdmin($committeesCommitteeID, $gibbon->session->get('gibbonPersonID'))) {
+        if (!$committeeGateway->isPersonCommitteeAdmin($committeesCommitteeID, $session->get('gibbonPersonID'))) {
             $page->addError(__('You do not have access to this action.'));
             return;
         }
@@ -62,9 +62,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         return;
     }
 
-    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_editProcess.php?search='.$search);
+    $form = Form::create('committeesManage', $session->get('absoluteURL').'/modules/Committees/committees_manage_editProcess.php?search='.$search);
 
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
 
@@ -149,9 +149,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     echo $table->render($roles);
 
     // ADD ROLE
-    $form = Form::create('committeesManageEdit', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_edit_role_addProcess.php?search='.$search);
+    $form = Form::create('committeesManageEdit', $session->get('absoluteURL').'/modules/Committees/committees_manage_edit_role_addProcess.php?search='.$search);
 
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
 

@@ -45,10 +45,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_notSigne
         ->pageSize(!empty($viewMode) ? 0 : 50)
         ->fromPOST();
 
-    $members = $committeeMemberGateway->queryStaffWhoAreNotMembers($criteria, $gibbon->session->get('gibbonSchoolYearID'));
+    $members = $committeeMemberGateway->queryStaffWhoAreNotMembers($criteria, $session->get('gibbonSchoolYearID'));
 
     // DATA TABLE
-    $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $gibbon->session);
+    $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $session);
     $table->setTitle(__m('Staff Not Signed-up'));
     $table->setDescription(__m('By default this report shows teaching staff who have not signed-up for a committee. You can use the filters to view other staff types, or all staff.'));
 
