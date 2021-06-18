@@ -25,7 +25,7 @@ require_once '../../gibbon.php';
 
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committee.php&committeesCommitteeID='.$committeesCommitteeID;
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Committees/committee.php&committeesCommitteeID='.$committeesCommitteeID;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php') == false) {
     $URL .= '&return=error0';
@@ -40,7 +40,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     $data = [
         'committeesCommitteeID' => $committeesCommitteeID,
         'committeesRoleID'      => $_POST['committeesRoleID'] ?? '',
-        'gibbonPersonID'        => $gibbon->session->get('gibbonPersonID'),
+        'gibbonPersonID'        => $session->get('gibbonPersonID'),
     ];
 
     // Validate the required values are present
@@ -79,7 +79,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
 
     // Ensure the person has not exceeded their max sign-ups
     $signupMaximum = getSettingByScope($connection2, 'Committees', 'signupMaximum');
-    $roleCount = $committeeRoleGateway->getRoleCountByPerson($gibbon->session->get('gibbonSchoolYearID'), $data['gibbonPersonID']);
+    $roleCount = $committeeRoleGateway->getRoleCountByPerson($session->get('gibbonSchoolYearID'), $data['gibbonPersonID']);
     if ($roleCount >= $signupMaximum) {
         $URL .= '&return=error5';
         header("Location: {$URL}");

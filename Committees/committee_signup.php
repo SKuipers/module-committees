@@ -58,14 +58,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         return;
     }
 
-    $roleExisting = $committeeMemberGateway->selectBy(['gibbonPersonID' => $gibbon->session->get('gibbonPersonID'), 'committeesCommitteeID' => $committeesCommitteeID]);
+    $roleExisting = $committeeMemberGateway->selectBy(['gibbonPersonID' => $session->get('gibbonPersonID'), 'committeesCommitteeID' => $committeesCommitteeID]);
     if ($roleExisting->rowCount() > 0) {
         $page->addWarning(__m('You are already a member of this committee.'));
         return;
     }
 
     $signupMaximum = getSettingByScope($connection2, 'Committees', 'signupMaximum');
-    $roleCount = $committeeRoleGateway->getRoleCountByPerson($gibbon->session->get('gibbonSchoolYearID'), $gibbon->session->get('gibbonPersonID'));
+    $roleCount = $committeeRoleGateway->getRoleCountByPerson($session->get('gibbonSchoolYearID'), $session->get('gibbonPersonID'));
     if ($roleCount >= $signupMaximum) {
         $page->addWarning(__m('You have already signed-up for the maximum number of committees.'));
         return;
@@ -78,16 +78,16 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         return;
     }
 
-    $form = Form::create('committeesSignup', $gibbon->session->get('absoluteURL').'/modules/Committees/committee_signupProcess.php');
+    $form = Form::create('committeesSignup', $session->get('absoluteURL').'/modules/Committees/committee_signupProcess.php');
     $form->setFactory(DatabaseFormFactory::create($pdo));
     
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
     $form->addHiddenValue('committeesRoleID', $committeesRoleID);
 
     $row = $form->addRow();
         $row->addLabel('gibbonPersonIDLabel', __('Person'));
-        $row->addSelectStaff('gibbonPersonID')->readonly()->selected($gibbon->session->get('gibbonPersonID'));
+        $row->addSelectStaff('gibbonPersonID')->readonly()->selected($session->get('gibbonPersonID'));
 
     $row = $form->addRow();
         $row->addLabel('committeeLabel', __m('Committee'));

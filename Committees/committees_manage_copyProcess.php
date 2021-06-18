@@ -28,7 +28,7 @@ require_once '../../gibbon.php';
 $gibbonSchoolYearID = $_GET['gibbonSchoolYearID'] ?? '';
 $gibbonSchoolYearIDNext = $_GET['gibbonSchoolYearIDNext'] ?? '';
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage.php&gibbonSchoolYearID='.$gibbonSchoolYearIDNext;
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage.php&gibbonSchoolYearID='.$gibbonSchoolYearIDNext;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage.php') == false) {
     $URL .= '&return=error0';

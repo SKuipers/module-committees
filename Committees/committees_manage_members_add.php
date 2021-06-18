@@ -29,7 +29,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     // Proceed!
     $search = $_GET['search'] ?? '';
     $committeesCommitteeID = $_GET['committeesCommitteeID'] ?? '';
-    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
+    $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $session->get('gibbonSchoolYearID');
 
     $page->breadcrumbs
         ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
@@ -47,16 +47,16 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
     if (empty($highestManageAction) || $highestManageAction == 'Manage Committees_myCommitteeAdmin') {
-        if (!$container->get(CommitteeGateway::class)->isPersonCommitteeAdmin($committeesCommitteeID, $gibbon->session->get('gibbonPersonID'))) {
+        if (!$container->get(CommitteeGateway::class)->isPersonCommitteeAdmin($committeesCommitteeID, $session->get('gibbonPersonID'))) {
             $page->addError(__('You do not have access to this action.'));
             return;
         }
     }
 
-    $form = Form::create('committeesManage', $gibbon->session->get('absoluteURL').'/modules/Committees/committees_manage_members_addProcess.php?search='.$search);
+    $form = Form::create('committeesManage', $session->get('absoluteURL').'/modules/Committees/committees_manage_members_addProcess.php?search='.$search);
     $form->setFactory(DatabaseFormFactory::create($pdo));
     
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
     $form->addHiddenValue('committeesCommitteeID', $committeesCommitteeID);
 

@@ -45,10 +45,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_members.
         ->filterBy('active', 'Y')
         ->fromPOST();
 
-    $members = $committeeMemberGateway->queryMembersBySchoolYear($criteria, $gibbon->session->get('gibbonSchoolYearID'));
+    $members = $committeeMemberGateway->queryMembersBySchoolYear($criteria, $session->get('gibbonSchoolYearID'));
 
     // DATA TABLE
-    $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $gibbon->session);
+    $table = ReportTable::createPaginated('committeeReport', $criteria)->setViewMode($viewMode, $session);
     $table->setTitle(__m('Committee Membership'));
 
     $table->addRowCountColumn($members->getPageFrom());

@@ -34,10 +34,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/settings.php') 
     $settingGateway = $container->get(SettingGateway::class);
 
     // FORM
-    $form = Form::create('settings', $gibbon->session->get('absoluteURL').'/modules/Committees/settingsProcess.php');
+    $form = Form::create('settings', $session->get('absoluteURL').'/modules/Committees/settingsProcess.php');
     $form->setTitle(__('Settings'));
 
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
 
     $setting = $settingGateway->getSettingByScope('Committees', 'signupActive', true);
     $row = $form->addRow();

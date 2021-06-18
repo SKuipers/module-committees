@@ -23,11 +23,11 @@ use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';
-$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $gibbon->session->get('gibbonSchoolYearID');
+$gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $session->get('gibbonSchoolYearID');
 $committeesCommitteeID = $_POST['committeesCommitteeID'] ?? '';
 $committeesRoleID = $_POST['committeesRoleID'] ?? '';
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_edit_role_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID.'&committeesRoleID='.$committeesRoleID.'&search='.$search;
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Committees/committees_manage_edit_role_edit.php&gibbonSchoolYearID='.$gibbonSchoolYearID.'&committeesCommitteeID='.$committeesCommitteeID.'&committeesRoleID='.$committeesRoleID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_manage_edit_role_edit.php') == false) {
     $URL .= '&return=error0';

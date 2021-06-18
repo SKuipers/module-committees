@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+v1.0.03
+-------
+Session variable and null coalesce refactoring
 
 v1.0.02
 -------

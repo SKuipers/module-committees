@@ -23,7 +23,7 @@ $description = "Manage committee members and sign-up.";
 $entryURL = "committees.php";
 $type = "Additional";
 $category = "Other";
-$version = "1.0.02";
+$version = "1.0.03";
 $author = "Sandra Kuipers";
 $url = "https://github.com/SKuipers";
 
