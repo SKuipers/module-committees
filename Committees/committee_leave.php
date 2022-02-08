@@ -22,6 +22,7 @@ use Gibbon\Forms\DatabaseFormFactory;
 use Gibbon\Services\Format;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
+use Gibbon\Domain\System\SettingGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave.php') == false) {
     // Access denied
@@ -54,7 +55,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_leave
         return;
     }
 
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $signupActive = $container->get(SettingGateway::class)->getSettingByScope('Committees', 'signupActive');
     if ($signupActive == 'Y') {
         echo Format::alert(__m('This action will remove you from the selected committee.').' '.__m('You can then join a new committee from the View Committees page.'), 'warning');
     } else {

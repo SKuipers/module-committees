@@ -22,6 +22,7 @@ use Gibbon\Forms\DatabaseFormFactory;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
+use Gibbon\Domain\System\SettingGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php') == false) {
     // Access denied
@@ -52,7 +53,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         return;
     }
 
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $settingGateway = $container->get(SettingGateway::class);
+
+    $signupActive = $settingGateway->getSettingByScope('Committees', 'signupActive');
     if ($signupActive != 'Y' || $committee['signup'] != 'Y') {
         $page->addError(__m('This committee is not available for sign-up.'));
         return;
@@ -64,7 +67,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         return;
     }
 
-    $signupMaximum = getSettingByScope($connection2, 'Committees', 'signupMaximum');
+    $signupMaximum = $settingGateway->getSettingByScope('Committees', 'signupMaximum');
     $roleCount = $committeeRoleGateway->getRoleCountByPerson($session->get('gibbonSchoolYearID'), $session->get('gibbonPersonID'));
     if ($roleCount >= $signupMaximum) {
         $page->addWarning(__m('You have already signed-up for the maximum number of committees.'));

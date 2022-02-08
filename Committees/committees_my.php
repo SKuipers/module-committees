@@ -20,6 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 use Gibbon\Tables\DataTable;
 use Gibbon\Services\Format;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
+use Gibbon\Domain\System\SettingGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.php') == false) {
     // Access denied
@@ -44,7 +45,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_my.p
 
     $highestManageAction = getHighestGroupedAction($guid, '/modules/Committees/committees_manage_edit.php', $connection2);
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $signupActive = $container->get(SettingGateway::class)->getSettingByScope('Committees', 'signupActive');
 
     // DATA TABLE
     $table = DataTable::createPaginated('committees', $criteria);

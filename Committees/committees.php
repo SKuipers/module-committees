@@ -21,6 +21,7 @@ use Gibbon\Services\Format;
 use Gibbon\Tables\DataTable;
 use Gibbon\Tables\View\GridView;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
+use Gibbon\Domain\System\SettingGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php') == false) {
     // Access denied
@@ -44,7 +45,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees.php'
     $committees = $committeeGateway->queryCommittees($criteria, $session->get('gibbonSchoolYearID'));
 
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $signupActive = $container->get(SettingGateway::class)->getSettingByScope('Committees', 'signupActive');
 
     // GRID TABLE
     $gridRenderer = new GridView($container->get('twig'));

@@ -20,6 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
+use Gibbon\Domain\System\SettingGateway;
 
 require_once '../../gibbon.php';
 
@@ -60,8 +61,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
         exit;
     }
 
+    $settingGateway = $container->get(SettingGateway::class);
+
     // Ensure the committee signup is available
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $signupActive = $settingGateway->getSettingByScope('Committees', 'signupActive');
     if ($signupActive != 'Y' || $committee['signup'] != 'Y') {
         $URL .= '&return=error3';
         header("Location: {$URL}");
@@ -78,7 +81,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee_signu
     }
 
     // Ensure the person has not exceeded their max sign-ups
-    $signupMaximum = getSettingByScope($connection2, 'Committees', 'signupMaximum');
+    $signupMaximum = $settingGateway->getSettingByScope('Committees', 'signupMaximum');
     $roleCount = $committeeRoleGateway->getRoleCountByPerson($session->get('gibbonSchoolYearID'), $data['gibbonPersonID']);
     if ($roleCount >= $signupMaximum) {
         $URL .= '&return=error5';

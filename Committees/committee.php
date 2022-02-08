@@ -22,6 +22,7 @@ use Gibbon\Tables\DataTable;
 use Gibbon\Tables\View\GridView;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
+use Gibbon\Domain\System\SettingGateway;
 
 if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php') == false) {
     // Access denied
@@ -66,7 +67,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committee.php')
 
     $canViewProfile = isActionAccessible($guid, $connection2, '/modules/Staff/staff_view_details.php');
     $canSignup = isActionAccessible($guid, $connection2, '/modules/Committees/committee_signup.php');
-    $signupActive = getSettingByScope($connection2, 'Committees', 'signupActive');
+    $signupActive = $container->get(SettingGateway::class)->getSettingByScope('Committees', 'signupActive');
 
     // AVAILABLE SEATS
     if ($canSignup && $signupActive == 'Y' && $committee['signup'] == 'Y') {

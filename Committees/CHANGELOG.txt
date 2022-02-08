@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+v1.2.00
+-------
+Fix deprecated functions
+Requires Gibbon v23.0.00
+
 v1.1.00
 -------
 Session variable and null coalesce refactoring
