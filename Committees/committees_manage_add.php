@@ -24,11 +24,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     $page->addError(__('You do not have access to this action.'));
 } else {
     // Proceed!
-    $search = $_GET['search'] ?? '';
     $gibbonSchoolYearID = $_REQUEST['gibbonSchoolYearID'] ?? $session->get('gibbonSchoolYearID');
 
     $page->breadcrumbs
-        ->add(__m('Manage Committees'), 'committees_manage.php', ['search' => $search, 'gibbonSchoolYearID' => $gibbonSchoolYearID])
+        ->add(__m('Manage Committees'), 'committees_manage.php', ['gibbonSchoolYearID' => $gibbonSchoolYearID])
         ->add(__m('Add Committee'));
 
     $editLink = '';
@@ -39,13 +38,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         returnProcess($guid, $_GET['return'], $editLink, null);
     }
 
-    if ($search != '') {
-        echo "<div class='linkTop'>";
-        echo "<a href='".$session->get('absoluteURL')."/index.php?q=/modules/Committees/committees_manage.php&search=$search'>".__('Back to Search Results').'</a>';
-        echo '</div>';
-    }
-
-    $form = Form::create('committeesManage', $session->get('absoluteURL').'/modules/Committees/committees_manage_addProcess.php?search='.$search);
+    $form = Form::create('committeesManage', $session->get('absoluteURL').'/modules/Committees/committees_manage_addProcess.php');
 
     $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('gibbonSchoolYearID', $gibbonSchoolYearID);
