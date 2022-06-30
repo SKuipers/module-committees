@@ -97,6 +97,7 @@ class CommitteeMemberGateway extends QueryableGateway
             ->leftJoin('committeesCommittee', "committeesCommittee.committeesCommitteeID=committeesMember.committeesCommitteeID 
                         AND committeesCommittee.gibbonSchoolYearID=:gibbonSchoolYearID AND committeesCommittee.active = 'Y'")
             ->where("committeesCommittee.committeesCommitteeID IS NULL")
+            ->where("committeesMember.committeesMemberID IS NULL")
             ->where("gibbonPerson.status='Full'")
             ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
             ->groupBy(['gibbonStaff.gibbonPersonID']);

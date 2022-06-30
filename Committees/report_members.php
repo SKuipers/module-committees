@@ -40,7 +40,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/report_members.
 
     // QUERY
     $criteria = $committeeMemberGateway->newQueryCriteria(true)
-        ->sortBy('committeesCommittee.name', 'ASC')
+        ->sortBy(['committeesCommittee.name', 'role'])
         ->sortBy(['gibbonPerson.surname', 'gibbonPerson.preferredName'])
         ->filterBy('active', 'Y')
         ->fromPOST();
