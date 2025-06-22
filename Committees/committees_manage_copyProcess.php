@@ -21,8 +21,6 @@ use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 
 
-$_POST['address'] = '/modules/Committees/committees_manage.php';
-
 require_once '../../gibbon.php';
 
 $gibbonSchoolYearID = $_GET['gibbonSchoolYearID'] ?? '';

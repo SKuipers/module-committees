@@ -20,8 +20,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 
-$_POST['address'] = '/modules/Committees/committees_manage_edit.php';
-
 require_once '../../gibbon.php';
 
 $search = $_GET['search'] ?? '';

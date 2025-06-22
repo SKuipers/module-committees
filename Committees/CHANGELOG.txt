@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+v1.3.01
+-------
+Replaced deprecated $gibbon->session calls with $session
+Removed unnecessary $_POST['address'] assignment
+
 v1.3.00
 -------
 Gibbon v28 Compatibility
