@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
+use Gibbon\Contracts\Filesystem\FileHandler;
 
 require_once '../../gibbon.php';
 
@@ -57,6 +58,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
         exit;
     }
 
+    // Get existing record for file deletion check
+    $values = $committeeGateway->getByID($committeesCommitteeID);
+
     // Validate that this record is unique
     if (!$committeeGateway->unique($data, ['name', 'gibbonSchoolYearID'], $committeesCommitteeID)) {
         $URL .= '&return=error7';
@@ -65,20 +69,39 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
     }
 
     // Move attached file, if there is one
+    $partialFail = false;
+    $fileMetaData = null;
     if (!empty($_FILES['file']['tmp_name'])) {
         $file = $_FILES['file'] ?? null;
         
         // Upload the file, return the /uploads relative path
         $fileUploader = new Gibbon\FileUploader($pdo, $session);
         $data['logo'] = $fileUploader->uploadFromPost($file, $data['name']);
+
+        if (empty($data['logo'])) {
+            $partialFail = true;
+        } else {
+            $fileMetaData = $fileUploader->getFileMetaData($data['logo']);
+        }
     }
 
     // Update the record
     $updated = $committeeGateway->update($committeesCommitteeID, $data);
 
-    $URL .= !$updated
-        ? "&return=error2"
-        : "&return=success0";
+    // Handle file deletion when user removes logo
+    if (empty($data['logo']) && !empty($values['logo'])) {
+        $deleted = $container->get(FileHandler::class)->deleteFile('committeesCommittee', $committeesCommitteeID, 'logo');
+    }
 
+    // Record file tracking for logo
+    if (!empty($fileMetaData) && !empty($committeesCommitteeID)) {
+        $gibbonFileID = $container->get(FileHandler::class)->recordFileUpload($fileMetaData, 'committeesCommittee', $committeesCommitteeID, 'logo');
+
+        if (empty($gibbonFileID)) {
+            $partialFail = true;
+        }
+    }
+
+    $URL .= !$updated ? "&return=error2" : ($partialFail ? "&return=warning1" : "&return=success0");
     header("Location: {$URL}");
 }

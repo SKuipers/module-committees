@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v1.4.00
+-------
+Added comprehensive file upload tracking system to monitor and manage all file uploads across the system
+
 v1.3.01
 -------
 Replaced deprecated $gibbon->session calls with $session
