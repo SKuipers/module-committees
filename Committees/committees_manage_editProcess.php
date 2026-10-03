@@ -82,6 +82,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
             $partialFail = true;
         } else {
             $fileMetaData = $fileUploader->getFileMetaData($data['logo']);
+            if (!empty($fileMetaData) && !empty($values['logo'])) {
+                $fileMetaData['previousFilePath'] = $values['logo'];
+            }
         }
     }
 
