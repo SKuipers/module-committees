@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Contracts\Filesystem\FileHandler;
 use Gibbon\Module\Committees\Domain\CommitteeGateway;
 use Gibbon\Module\Committees\Domain\CommitteeRoleGateway;
 use Gibbon\Module\Committees\Domain\CommitteeMemberGateway;
@@ -54,6 +55,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Committees/committees_mana
 
     $deleted = $committeeGateway->delete($committeesCommitteeID);
     $partialFail &= !$deleted;
+
+    $fileDeleted = $container->get(FileHandler::class)->deleteFile('committeesCommittee', $committeesCommitteeID, 'logo');
 
     $criteria = $committeeGateway->newQueryCriteria();
     $roles = $committeeRoleGateway->queryRoles($criteria, $committeesCommitteeID);
